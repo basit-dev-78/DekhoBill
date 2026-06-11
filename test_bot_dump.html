@@ -1,0 +1,3854 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <title>K-Electric Duplicate Bill</title>
+    <meta name="description" content="Duplicate Electricity Bill">
+    <meta name="keywords" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="author" content="KESC">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="robots" content="All">
+    <link rel="stylesheet" type="text/css" href="styles/kesc.css">
+    
+
+    
+    
+    <!--Rebranded links -Creative Coas-->
+    <link rel="stylesheet" href="../ReBrandCSS/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../ReBrandCSS/custom.css"> 
+    <link rel="Stylesheet" href="../ReBrandCSS/paylist.css">
+    
+
+    <!--Jquery and SweetAlerts-->
+    <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    
+    <script src="../Scripts/sweetalert2.all.js"></script><style type="text/css">html.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown),
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+  overflow-y: hidden; }
+
+body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-icon {
+    margin: 0 0 15px; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-buttonswrapper {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -ms-flex-item-align: stretch;
+        align-self: stretch;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-loading {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-input {
+    height: 32px;
+    font-size: 14px;
+    margin: 5px auto; }
+
+body.swal2-toast-shown > .swal2-container {
+  position: fixed;
+  background-color: transparent; }
+  body.swal2-toast-shown > .swal2-container.swal2-shown {
+    background-color: transparent; }
+  body.swal2-toast-shown > .swal2-container.swal2-top {
+    top: 0;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-top-end, body.swal2-toast-shown > .swal2-container.swal2-top-right {
+    top: 0;
+    left: auto;
+    bottom: auto;
+    right: 0; }
+  body.swal2-toast-shown > .swal2-container.swal2-top-start, body.swal2-toast-shown > .swal2-container.swal2-top-left {
+    top: 0;
+    left: 0;
+    bottom: auto;
+    right: auto; }
+  body.swal2-toast-shown > .swal2-container.swal2-center-start, body.swal2-toast-shown > .swal2-container.swal2-center-left {
+    top: 50%;
+    left: 0;
+    bottom: auto;
+    right: auto;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-center {
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-center-end, body.swal2-toast-shown > .swal2-container.swal2-center-right {
+    top: 50%;
+    left: auto;
+    bottom: auto;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-bottom-start, body.swal2-toast-shown > .swal2-container.swal2-bottom-left {
+    top: auto;
+    left: 0;
+    bottom: 0;
+    right: auto; }
+  body.swal2-toast-shown > .swal2-container.swal2-bottom {
+    top: auto;
+    left: 50%;
+    bottom: 0;
+    right: auto;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-bottom-end, body.swal2-toast-shown > .swal2-container.swal2-bottom-right {
+    top: auto;
+    left: auto;
+    bottom: 0;
+    right: 0; }
+
+body.swal2-iosfix {
+  position: fixed;
+  left: 0;
+  right: 0; }
+
+body.swal2-no-backdrop > .swal2-shown {
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  background-color: transparent; }
+  body.swal2-no-backdrop > .swal2-shown > .swal2-modal {
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-top {
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-top-start, body.swal2-no-backdrop > .swal2-shown.swal2-top-left {
+    top: 0;
+    left: 0; }
+  body.swal2-no-backdrop > .swal2-shown.swal2-top-end, body.swal2-no-backdrop > .swal2-shown.swal2-top-right {
+    top: 0;
+    right: 0; }
+  body.swal2-no-backdrop > .swal2-shown.swal2-center {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-center-start, body.swal2-no-backdrop > .swal2-shown.swal2-center-left {
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-center-end, body.swal2-no-backdrop > .swal2-shown.swal2-center-right {
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-bottom {
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-bottom-start, body.swal2-no-backdrop > .swal2-shown.swal2-bottom-left {
+    bottom: 0;
+    left: 0; }
+  body.swal2-no-backdrop > .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop > .swal2-shown.swal2-bottom-right {
+    bottom: 0;
+    right: 0; }
+
+.swal2-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  padding: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 1060; }
+  .swal2-container.swal2-top {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start; }
+  .swal2-container.swal2-top-start, .swal2-container.swal2-top-left {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+  .swal2-container.swal2-top-end, .swal2-container.swal2-top-right {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+  .swal2-container.swal2-center {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+  .swal2-container.swal2-center-start, .swal2-container.swal2-center-left {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+  .swal2-container.swal2-center-end, .swal2-container.swal2-center-right {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+  .swal2-container.swal2-bottom {
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end; }
+  .swal2-container.swal2-bottom-start, .swal2-container.swal2-bottom-left {
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+  .swal2-container.swal2-bottom-end, .swal2-container.swal2-bottom-right {
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+  .swal2-container.swal2-grow-fullscreen > .swal2-modal {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -ms-flex-item-align: stretch;
+        align-self: stretch;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+  .swal2-container.swal2-grow-row > .swal2-modal {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+  .swal2-container.swal2-grow-column {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+    .swal2-container.swal2-grow-column.swal2-top, .swal2-container.swal2-grow-column.swal2-center, .swal2-container.swal2-grow-column.swal2-bottom {
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+    .swal2-container.swal2-grow-column.swal2-top-start, .swal2-container.swal2-grow-column.swal2-center-start, .swal2-container.swal2-grow-column.swal2-bottom-start, .swal2-container.swal2-grow-column.swal2-top-left, .swal2-container.swal2-grow-column.swal2-center-left, .swal2-container.swal2-grow-column.swal2-bottom-left {
+      -webkit-box-align: start;
+          -ms-flex-align: start;
+              align-items: flex-start; }
+    .swal2-container.swal2-grow-column.swal2-top-end, .swal2-container.swal2-grow-column.swal2-center-end, .swal2-container.swal2-grow-column.swal2-bottom-end, .swal2-container.swal2-grow-column.swal2-top-right, .swal2-container.swal2-grow-column.swal2-center-right, .swal2-container.swal2-grow-column.swal2-bottom-right {
+      -webkit-box-align: end;
+          -ms-flex-align: end;
+              align-items: flex-end; }
+    .swal2-container.swal2-grow-column > .swal2-modal {
+      display: -webkit-box !important;
+      display: -ms-flexbox !important;
+      display: flex !important;
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      -ms-flex-line-pack: center;
+          align-content: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center; }
+  .swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right) > .swal2-modal {
+    margin: auto; }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .swal2-container .swal2-modal {
+      margin: 0 !important; } }
+  .swal2-container.swal2-fade {
+    -webkit-transition: background-color .1s;
+    transition: background-color .1s; }
+  .swal2-container.swal2-shown {
+    background-color: rgba(0, 0, 0, 0.4); }
+
+.swal2-popup {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: none;
+  position: relative;
+  max-width: 100%; }
+  .swal2-popup.swal2-toast {
+    width: 300px;
+    padding: 0 15px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    overflow-y: hidden;
+    -webkit-box-shadow: 0 0 10px #d9d9d9;
+            box-shadow: 0 0 10px #d9d9d9; }
+    .swal2-popup.swal2-toast .swal2-title {
+      max-width: 300px;
+      font-size: 16px;
+      text-align: left; }
+    .swal2-popup.swal2-toast .swal2-content {
+      font-size: 14px;
+      text-align: left; }
+    .swal2-popup.swal2-toast .swal2-icon {
+      width: 32px;
+      min-width: 32px;
+      height: 32px;
+      margin: 0 15px 0 0; }
+      .swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
+        width: 32px;
+        height: 32px; }
+      .swal2-popup.swal2-toast .swal2-icon.swal2-info, .swal2-popup.swal2-toast .swal2-icon.swal2-warning, .swal2-popup.swal2-toast .swal2-icon.swal2-question {
+        font-size: 26px;
+        line-height: 32px; }
+      .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+        top: 14px;
+        width: 22px; }
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left'] {
+          left: 5px; }
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right'] {
+          right: 5px; }
+    .swal2-popup.swal2-toast .swal2-buttonswrapper {
+      margin: 0 0 0 5px; }
+    .swal2-popup.swal2-toast .swal2-styled {
+      margin: 0 0 0 5px;
+      padding: 5px 10px; }
+      .swal2-popup.swal2-toast .swal2-styled:focus {
+        -webkit-box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(50, 100, 150, 0.4);
+                box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(50, 100, 150, 0.4); }
+    .swal2-popup.swal2-toast .swal2-validationerror {
+      width: 100%;
+      margin: 5px -20px; }
+    .swal2-popup.swal2-toast .swal2-success {
+      border-color: #a5dc86; }
+      .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'] {
+        border-radius: 50%;
+        position: absolute;
+        width: 32px;
+        height: 64px;
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg); }
+        .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='left'] {
+          border-radius: 64px 0 0 64px;
+          top: -4px;
+          left: -15px;
+          -webkit-transform: rotate(-45deg);
+                  transform: rotate(-45deg);
+          -webkit-transform-origin: 32px 32px;
+                  transform-origin: 32px 32px; }
+        .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='right'] {
+          border-radius: 0 64px 64px 0;
+          top: -5px;
+          left: 14px;
+          -webkit-transform-origin: 0 32px;
+                  transform-origin: 0 32px; }
+      .swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
+        width: 32px;
+        height: 32px; }
+      .swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+        width: 7px;
+        height: 90px;
+        left: 28px;
+        top: 8px; }
+      .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'] {
+        height: 5px; }
+        .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='tip'] {
+          width: 12px;
+          left: 3px;
+          top: 18px; }
+        .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='long'] {
+          width: 22px;
+          right: 3px;
+          top: 15px; }
+    .swal2-popup.swal2-toast .swal2-animate-success-line-tip {
+      -webkit-animation: animate-toast-success-tip .75s;
+              animation: animate-toast-success-tip .75s; }
+    .swal2-popup.swal2-toast .swal2-animate-success-line-long {
+      -webkit-animation: animate-toast-success-long .75s;
+              animation: animate-toast-success-long .75s; }
+  .swal2-popup:focus {
+    outline: none; }
+  .swal2-popup.swal2-loading {
+    overflow-y: hidden; }
+  .swal2-popup .swal2-title {
+    color: #595959;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 600;
+    text-transform: none;
+    position: relative;
+    margin: 0 0 .4em;
+    padding: 0;
+    display: block;
+    word-wrap: break-word; }
+  .swal2-popup .swal2-buttonswrapper {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 15px; }
+    .swal2-popup .swal2-buttonswrapper:not(.swal2-loading) .swal2-styled[disabled] {
+      opacity: .4;
+      cursor: no-drop; }
+    .swal2-popup .swal2-buttonswrapper.swal2-loading .swal2-styled.swal2-confirm {
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      border: 4px solid transparent;
+      border-color: transparent;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      margin: 7.5px;
+      vertical-align: top;
+      background-color: transparent !important;
+      color: transparent;
+      cursor: default;
+      border-radius: 100%;
+      -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+              animation: rotate-loading 1.5s linear 0s infinite normal;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none; }
+    .swal2-popup .swal2-buttonswrapper.swal2-loading .swal2-styled.swal2-cancel {
+      margin-left: 30px;
+      margin-right: 30px; }
+    .swal2-popup .swal2-buttonswrapper.swal2-loading :not(.swal2-styled).swal2-confirm::after {
+      display: inline-block;
+      content: '';
+      margin-left: 5px;
+      vertical-align: -1px;
+      height: 15px;
+      width: 15px;
+      border: 3px solid #999999;
+      -webkit-box-shadow: 1px 1px 1px #fff;
+              box-shadow: 1px 1px 1px #fff;
+      border-right-color: transparent;
+      border-radius: 50%;
+      -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+              animation: rotate-loading 1.5s linear 0s infinite normal; }
+  .swal2-popup .swal2-styled {
+    border: 0;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    margin: 15px 5px 0;
+    padding: 10px 32px; }
+    .swal2-popup .swal2-styled:focus {
+      outline: none;
+      -webkit-box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(50, 100, 150, 0.4);
+              box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(50, 100, 150, 0.4); }
+  .swal2-popup .swal2-image {
+    margin: 20px auto;
+    max-width: 100%; }
+  .swal2-popup .swal2-close {
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 38px;
+    height: 40px;
+    font-size: 36px;
+    line-height: 40px;
+    font-family: serif;
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    cursor: pointer;
+    color: #cccccc;
+    -webkit-transition: color .1s ease;
+    transition: color .1s ease; }
+    .swal2-popup .swal2-close:hover {
+      color: #d55; }
+  .swal2-popup > .swal2-input,
+  .swal2-popup > .swal2-file,
+  .swal2-popup > .swal2-textarea,
+  .swal2-popup > .swal2-select,
+  .swal2-popup > .swal2-radio,
+  .swal2-popup > .swal2-checkbox {
+    display: none; }
+  .swal2-popup .swal2-content {
+    font-size: 18px;
+    text-align: center;
+    font-weight: 300;
+    position: relative;
+    float: none;
+    margin: 0;
+    padding: 0;
+    line-height: normal;
+    color: #545454;
+    word-wrap: break-word; }
+  .swal2-popup .swal2-input,
+  .swal2-popup .swal2-file,
+  .swal2-popup .swal2-textarea,
+  .swal2-popup .swal2-select,
+  .swal2-popup .swal2-radio,
+  .swal2-popup .swal2-checkbox {
+    margin: 20px auto; }
+  .swal2-popup .swal2-input,
+  .swal2-popup .swal2-file,
+  .swal2-popup .swal2-textarea {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 18px;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06);
+    -webkit-transition: border-color .3s, -webkit-box-shadow .3s;
+    transition: border-color .3s, -webkit-box-shadow .3s;
+    transition: border-color .3s, box-shadow .3s;
+    transition: border-color .3s, box-shadow .3s, -webkit-box-shadow .3s; }
+    .swal2-popup .swal2-input.swal2-inputerror,
+    .swal2-popup .swal2-file.swal2-inputerror,
+    .swal2-popup .swal2-textarea.swal2-inputerror {
+      border-color: #f27474 !important;
+      -webkit-box-shadow: 0 0 2px #f27474 !important;
+              box-shadow: 0 0 2px #f27474 !important; }
+    .swal2-popup .swal2-input:focus,
+    .swal2-popup .swal2-file:focus,
+    .swal2-popup .swal2-textarea:focus {
+      outline: none;
+      border: 1px solid #b4dbed;
+      -webkit-box-shadow: 0 0 3px #c4e6f5;
+              box-shadow: 0 0 3px #c4e6f5; }
+    .swal2-popup .swal2-input::-webkit-input-placeholder,
+    .swal2-popup .swal2-file::-webkit-input-placeholder,
+    .swal2-popup .swal2-textarea::-webkit-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input:-ms-input-placeholder,
+    .swal2-popup .swal2-file:-ms-input-placeholder,
+    .swal2-popup .swal2-textarea:-ms-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input::-ms-input-placeholder,
+    .swal2-popup .swal2-file::-ms-input-placeholder,
+    .swal2-popup .swal2-textarea::-ms-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input::placeholder,
+    .swal2-popup .swal2-file::placeholder,
+    .swal2-popup .swal2-textarea::placeholder {
+      color: #cccccc; }
+  .swal2-popup .swal2-range input {
+    float: left;
+    width: 80%; }
+  .swal2-popup .swal2-range output {
+    float: right;
+    width: 20%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center; }
+  .swal2-popup .swal2-range input,
+  .swal2-popup .swal2-range output {
+    height: 43px;
+    line-height: 43px;
+    vertical-align: middle;
+    margin: 20px auto;
+    padding: 0; }
+  .swal2-popup .swal2-input {
+    height: 43px;
+    padding: 0 12px; }
+    .swal2-popup .swal2-input[type='number'] {
+      max-width: 150px; }
+  .swal2-popup .swal2-file {
+    font-size: 20px; }
+  .swal2-popup .swal2-textarea {
+    height: 108px;
+    padding: 12px; }
+  .swal2-popup .swal2-select {
+    color: #545454;
+    font-size: inherit;
+    padding: 5px 10px;
+    min-width: 40%;
+    max-width: 100%; }
+  .swal2-popup .swal2-radio {
+    border: 0; }
+    .swal2-popup .swal2-radio label:not(:first-child) {
+      margin-left: 20px; }
+    .swal2-popup .swal2-radio input,
+    .swal2-popup .swal2-radio span {
+      vertical-align: middle; }
+    .swal2-popup .swal2-radio input {
+      margin: 0 3px 0 0; }
+  .swal2-popup .swal2-checkbox {
+    color: #545454; }
+    .swal2-popup .swal2-checkbox input,
+    .swal2-popup .swal2-checkbox span {
+      vertical-align: middle; }
+  .swal2-popup .swal2-validationerror {
+    background-color: #f0f0f0;
+    margin: 0 -20px;
+    overflow: hidden;
+    padding: 10px;
+    color: gray;
+    font-size: 16px;
+    font-weight: 300;
+    display: none; }
+    .swal2-popup .swal2-validationerror::before {
+      content: '!';
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #ea7d7d;
+      color: #fff;
+      line-height: 24px;
+      text-align: center;
+      margin-right: 10px; }
+
+@supports (-ms-accelerator: true) {
+  .swal2-range input {
+    width: 100% !important; }
+  .swal2-range output {
+    display: none; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .swal2-range input {
+    width: 100% !important; }
+  .swal2-range output {
+    display: none; } }
+
+.swal2-icon {
+  width: 80px;
+  height: 80px;
+  border: 4px solid transparent;
+  border-radius: 50%;
+  margin: 20px auto 30px;
+  padding: 0;
+  position: relative;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+  .swal2-icon.swal2-error {
+    border-color: #f27474; }
+    .swal2-icon.swal2-error .swal2-x-mark {
+      position: relative;
+      display: block; }
+    .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+      position: absolute;
+      height: 5px;
+      width: 47px;
+      background-color: #f27474;
+      display: block;
+      top: 37px;
+      border-radius: 2px; }
+      .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left'] {
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+        left: 17px; }
+      .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right'] {
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        right: 16px; }
+  .swal2-icon.swal2-warning {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #f8bb86;
+    border-color: #facea8;
+    font-size: 60px;
+    line-height: 80px;
+    text-align: center; }
+  .swal2-icon.swal2-info {
+    font-family: 'Open Sans', sans-serif;
+    color: #3fc3ee;
+    border-color: #9de0f6;
+    font-size: 60px;
+    line-height: 80px;
+    text-align: center; }
+  .swal2-icon.swal2-question {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #87adbd;
+    border-color: #c9dae1;
+    font-size: 60px;
+    line-height: 80px;
+    text-align: center; }
+  .swal2-icon.swal2-success {
+    border-color: #a5dc86; }
+    .swal2-icon.swal2-success [class^='swal2-success-circular-line'] {
+      border-radius: 50%;
+      position: absolute;
+      width: 60px;
+      height: 120px;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+      .swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='left'] {
+        border-radius: 120px 0 0 120px;
+        top: -7px;
+        left: -33px;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        -webkit-transform-origin: 60px 60px;
+                transform-origin: 60px 60px; }
+      .swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='right'] {
+        border-radius: 0 120px 120px 0;
+        top: -11px;
+        left: 30px;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        -webkit-transform-origin: 0 60px;
+                transform-origin: 0 60px; }
+    .swal2-icon.swal2-success .swal2-success-ring {
+      width: 80px;
+      height: 80px;
+      border: 4px solid rgba(165, 220, 134, 0.2);
+      border-radius: 50%;
+      -webkit-box-sizing: content-box;
+              box-sizing: content-box;
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      z-index: 2; }
+    .swal2-icon.swal2-success .swal2-success-fix {
+      width: 7px;
+      height: 90px;
+      position: absolute;
+      left: 28px;
+      top: 8px;
+      z-index: 1;
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
+    .swal2-icon.swal2-success [class^='swal2-success-line'] {
+      height: 5px;
+      background-color: #a5dc86;
+      display: block;
+      border-radius: 2px;
+      position: absolute;
+      z-index: 2; }
+      .swal2-icon.swal2-success [class^='swal2-success-line'][class$='tip'] {
+        width: 25px;
+        left: 14px;
+        top: 46px;
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg); }
+      .swal2-icon.swal2-success [class^='swal2-success-line'][class$='long'] {
+        width: 47px;
+        right: 8px;
+        top: 38px;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg); }
+
+.swal2-progresssteps {
+  font-weight: 600;
+  margin: 0 0 20px;
+  padding: 0; }
+  .swal2-progresssteps li {
+    display: inline-block;
+    position: relative; }
+  .swal2-progresssteps .swal2-progresscircle {
+    background: #f7941e;
+    border-radius: 2em;
+    color: #fff;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    width: 2em;
+    z-index: 20; }
+    .swal2-progresssteps .swal2-progresscircle:first-child {
+      margin-left: 0; }
+    .swal2-progresssteps .swal2-progresscircle:last-child {
+      margin-right: 0; }
+    .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep {
+      background: #f7941e; }
+      .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progresscircle {
+        background: #add8e6; }
+      .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progressline {
+        background: #add8e6; }
+  .swal2-progresssteps .swal2-progressline {
+    background: #f7941e;
+    height: .4em;
+    margin: 0 -1px;
+    z-index: 10; }
+
+[class^='swal2'] {
+  -webkit-tap-highlight-color: transparent; }
+
+@-webkit-keyframes showSweetToast {
+  0% {
+    -webkit-transform: translateY(-10px) rotateZ(2deg);
+            transform: translateY(-10px) rotateZ(2deg);
+    opacity: 0; }
+  33% {
+    -webkit-transform: translateY(0) rotateZ(-2deg);
+            transform: translateY(0) rotateZ(-2deg);
+    opacity: .5; }
+  66% {
+    -webkit-transform: translateY(5px) rotateZ(2deg);
+            transform: translateY(5px) rotateZ(2deg);
+    opacity: .7; }
+  100% {
+    -webkit-transform: translateY(0) rotateZ(0);
+            transform: translateY(0) rotateZ(0);
+    opacity: 1; } }
+
+@keyframes showSweetToast {
+  0% {
+    -webkit-transform: translateY(-10px) rotateZ(2deg);
+            transform: translateY(-10px) rotateZ(2deg);
+    opacity: 0; }
+  33% {
+    -webkit-transform: translateY(0) rotateZ(-2deg);
+            transform: translateY(0) rotateZ(-2deg);
+    opacity: .5; }
+  66% {
+    -webkit-transform: translateY(5px) rotateZ(2deg);
+            transform: translateY(5px) rotateZ(2deg);
+    opacity: .7; }
+  100% {
+    -webkit-transform: translateY(0) rotateZ(0);
+            transform: translateY(0) rotateZ(0);
+    opacity: 1; } }
+
+@-webkit-keyframes hideSweetToast {
+  0% {
+    opacity: 1; }
+  33% {
+    opacity: .5; }
+  100% {
+    -webkit-transform: rotateZ(1deg);
+            transform: rotateZ(1deg);
+    opacity: 0; } }
+
+@keyframes hideSweetToast {
+  0% {
+    opacity: 1; }
+  33% {
+    opacity: .5; }
+  100% {
+    -webkit-transform: rotateZ(1deg);
+            transform: rotateZ(1deg);
+    opacity: 0; } }
+
+@-webkit-keyframes showSweetAlert {
+  0% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+  45% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05); }
+  80% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes showSweetAlert {
+  0% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+  45% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05); }
+  80% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@-webkit-keyframes hideSweetAlert {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1; }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    opacity: 0; } }
+
+@keyframes hideSweetAlert {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1; }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    opacity: 0; } }
+
+.swal2-show {
+  -webkit-animation: showSweetAlert .3s;
+          animation: showSweetAlert .3s; }
+  .swal2-show.swal2-toast {
+    -webkit-animation: showSweetToast .5s;
+            animation: showSweetToast .5s; }
+  .swal2-show.swal2-noanimation {
+    -webkit-animation: none;
+            animation: none; }
+
+.swal2-hide {
+  -webkit-animation: hideSweetAlert .15s forwards;
+          animation: hideSweetAlert .15s forwards; }
+  .swal2-hide.swal2-toast {
+    -webkit-animation: hideSweetToast .2s forwards;
+            animation: hideSweetToast .2s forwards; }
+  .swal2-hide.swal2-noanimation {
+    -webkit-animation: none;
+            animation: none; }
+
+[dir='rtl'] .swal2-close {
+  left: 8px;
+  right: auto; }
+
+@-webkit-keyframes animate-success-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 19px; }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 19px; }
+  70% {
+    width: 50px;
+    left: -8px;
+    top: 37px; }
+  84% {
+    width: 17px;
+    left: 21px;
+    top: 48px; }
+  100% {
+    width: 25px;
+    left: 14px;
+    top: 45px; } }
+
+@keyframes animate-success-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 19px; }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 19px; }
+  70% {
+    width: 50px;
+    left: -8px;
+    top: 37px; }
+  84% {
+    width: 17px;
+    left: 21px;
+    top: 48px; }
+  100% {
+    width: 25px;
+    left: 14px;
+    top: 45px; } }
+
+@-webkit-keyframes animate-success-long {
+  0% {
+    width: 0;
+    right: 46px;
+    top: 54px; }
+  65% {
+    width: 0;
+    right: 46px;
+    top: 54px; }
+  84% {
+    width: 55px;
+    right: 0;
+    top: 35px; }
+  100% {
+    width: 47px;
+    right: 8px;
+    top: 38px; } }
+
+@keyframes animate-success-long {
+  0% {
+    width: 0;
+    right: 46px;
+    top: 54px; }
+  65% {
+    width: 0;
+    right: 46px;
+    top: 54px; }
+  84% {
+    width: 55px;
+    right: 0;
+    top: 35px; }
+  100% {
+    width: 47px;
+    right: 8px;
+    top: 38px; } }
+
+@-webkit-keyframes animate-toast-success-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 9px; }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 9px; }
+  70% {
+    width: 24px;
+    left: -4px;
+    top: 17px; }
+  84% {
+    width: 8px;
+    left: 10px;
+    top: 20px; }
+  100% {
+    width: 12px;
+    left: 3px;
+    top: 18px; } }
+
+@keyframes animate-toast-success-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 9px; }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 9px; }
+  70% {
+    width: 24px;
+    left: -4px;
+    top: 17px; }
+  84% {
+    width: 8px;
+    left: 10px;
+    top: 20px; }
+  100% {
+    width: 12px;
+    left: 3px;
+    top: 18px; } }
+
+@-webkit-keyframes animate-toast-success-long {
+  0% {
+    width: 0;
+    right: 22px;
+    top: 26px; }
+  65% {
+    width: 0;
+    right: 22px;
+    top: 26px; }
+  84% {
+    width: 26px;
+    right: 0;
+    top: 15px; }
+  100% {
+    width: 22px;
+    right: 3px;
+    top: 15px; } }
+
+@keyframes animate-toast-success-long {
+  0% {
+    width: 0;
+    right: 22px;
+    top: 26px; }
+  65% {
+    width: 0;
+    right: 22px;
+    top: 26px; }
+  84% {
+    width: 26px;
+    right: 0;
+    top: 15px; }
+  100% {
+    width: 22px;
+    right: 3px;
+    top: 15px; } }
+
+@-webkit-keyframes rotatePlaceholder {
+  0% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  5% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  12% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); }
+  100% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); } }
+
+@keyframes rotatePlaceholder {
+  0% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  5% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  12% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); }
+  100% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); } }
+
+.swal2-animate-success-line-tip {
+  -webkit-animation: animate-success-tip .75s;
+          animation: animate-success-tip .75s; }
+
+.swal2-animate-success-line-long {
+  -webkit-animation: animate-success-long .75s;
+          animation: animate-success-long .75s; }
+
+.swal2-success.swal2-animate-success-icon .swal2-success-circular-line-right {
+  -webkit-animation: rotatePlaceholder 4.25s ease-in;
+          animation: rotatePlaceholder 4.25s ease-in; }
+
+@-webkit-keyframes animate-error-icon {
+  0% {
+    -webkit-transform: rotateX(100deg);
+            transform: rotateX(100deg);
+    opacity: 0; }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    opacity: 1; } }
+
+@keyframes animate-error-icon {
+  0% {
+    -webkit-transform: rotateX(100deg);
+            transform: rotateX(100deg);
+    opacity: 0; }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    opacity: 1; } }
+
+.swal2-animate-error-icon {
+  -webkit-animation: animate-error-icon .5s;
+          animation: animate-error-icon .5s; }
+
+@-webkit-keyframes animate-x-mark {
+  0% {
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0; }
+  50% {
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0; }
+  80% {
+    -webkit-transform: scale(1.15);
+            transform: scale(1.15);
+    margin-top: -6px; }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    margin-top: 0;
+    opacity: 1; } }
+
+@keyframes animate-x-mark {
+  0% {
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0; }
+  50% {
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0; }
+  80% {
+    -webkit-transform: scale(1.15);
+            transform: scale(1.15);
+    margin-top: -6px; }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    margin-top: 0;
+    opacity: 1; } }
+
+.swal2-animate-x-mark {
+  -webkit-animation: animate-x-mark .5s;
+          animation: animate-x-mark .5s; }
+
+@-webkit-keyframes rotate-loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes rotate-loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+</style>
+    <script src="../Scripts/sweetalert2.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    
+    <script src="//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js"></script>
+    
+    <script type="text/javascript" language="javascript">
+
+</script>
+    <script type="text/javascript" language="javascript">
+        function numbersonly(e) {
+            var unicode = e.charCode ? e.charCode : e.keyCode
+            if (unicode != 8) { //if the key isn't the backspace key (which we should allow)
+                if (unicode < 48 || unicode > 57) //if not a number
+                    return false //disable key press
+            }
+        }
+
+
+
+        function hideme(btn) {
+            var fewSeconds = 5;
+            $('#btnViewBill').hide();
+            setTimeout(function () { $("#btnViewBill").show(); }, 3000);
+
+            //return false;
+
+        }
+
+        var fewSeconds = 5;
+        $('#Button1').click(function () {
+            alert('');
+            // Ajax request
+            var btn = $(this);
+            btn.prop('disabled', true);
+            setTimeout(function () {
+                btn.prop('disabled', false);
+            }, fewSeconds * 1000);
+        });
+    </script>
+
+    <!--Payment JS-->
+    <script type="text/javascript">
+
+        
+
+        function GenerateCaptcha() {
+            var chr1 = Math.ceil(Math.random() * 10) + '';
+            var chr2 = Math.ceil(Math.random() * 10) + '';
+            var chr3 = Math.ceil(Math.random() * 10) + '';
+
+            var str = new Array(4).join().replace(/(.|$)/g, function () { return ((Math.random() * 36) | 0).toString(36)[Math.random() < .5 ? "toString" : "toUpperCase"](); });
+            var captchaCode = str + chr1 + '' + chr2 + '' + chr3;
+            //document.getElementById("lblCaptcha").value = captchaCode
+            $("#lblCaptcha").text(captchaCode);
+            $('#hdCaptcha').val(captchaCode);
+        }
+        $(document).ready(
+
+            function () {
+                setTimeout(function () {
+                    jQuery('.numbersOnly').keyup(function () {
+                        this.value = this.value.replace(/[^0-9\.]/g, '');
+                    });
+                    $('#txtName').keypress(function (e) {
+                        var regex = new RegExp("^[-_ a-zA-Z]+$");
+                        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                        if (regex.test(str)) {
+                            return true;
+                        }
+
+                        e.preventDefault();
+                        return false;
+                    });
+                }, 1000)
+
+                GenerateCaptcha();
+                $('#txtimgcode').bind('copy paste cut', function (e) {
+                    e.preventDefault();
+                });
+                function valid(f) {
+                    !(/^[A-z&#209;&#241;0-9]*$/i).test(f.value) ? f.value = f.value.replace(/[^A-z&#209;&#241;0-9]/ig, '') : null;
+                }
+
+                $('#OnlinePaymentbtn').click(function (event) {
+                    onClickPaymentButton(event);
+                });
+
+                $('.modal').on('hidden.bs.modal', function (e) {
+                    document.getElementById("confirmButton").style.display = "none";
+                });
+
+            });
+
+        var checker = -1;
+        function DivIPGClicked() {
+            checker = 0;
+            document.getElementById("jc").classList.remove("btnActive");
+            document.getElementById("nift").classList.remove("btnActive");
+            document.getElementById("ipg").classList.add("btnActive");
+            document.getElementById("payFast").classList.remove("btnActive");
+            document.getElementById("alfa").classList.remove("btnActive");
+        }
+
+        function DivJCClicked() {
+            checker = 1;
+            document.getElementById("jc").classList.add("btnActive");
+            document.getElementById("nift").classList.remove("btnActive");
+            /*check if IPG button is available since the credit card 
+            option is not available for Commerical etc.consumers*/
+            if (document.getElementById("ipg")) {
+                document.getElementById("ipg").classList.remove("btnActive");
+            }
+            document.getElementById("payFast").classList.remove("btnActive");
+            document.getElementById("alfa").classList.remove("btnActive");
+        }
+        function DivPayProClicked() {
+            checker = 4;
+            document.getElementById("payp").classList.add("btnActive");
+            document.getElementById("nift").classList.remove("btnActive");
+            /*check if IPG button is available since the credit card 
+            option is not available for Commerical etc.consumers*/
+            if (document.getElementById("ipg")) {
+                document.getElementById("ipg").classList.remove("btnActive");
+            }
+            document.getElementById("payFast").classList.remove("btnActive");
+            document.getElementById("alfa").classList.remove("btnActive");
+        }
+
+        function DivNiftClicked() {
+            checker = 2;
+            document.getElementById("jc").classList.remove("btnActive");
+            document.getElementById("nift").classList.add("btnActive");
+            if (document.getElementById("ipg")) {
+                document.getElementById("ipg").classList.remove("btnActive");
+            }
+            document.getElementById("payFast").classList.remove("btnActive");
+            document.getElementById("alfa").classList.remove("btnActive");
+        }
+
+        function DivPFClicked() {
+            checker = 3;
+            document.getElementById("jc").classList.remove("btnActive");
+            document.getElementById("nift").classList.remove("btnActive");
+            if (document.getElementById("ipg")) {
+                document.getElementById("ipg").classList.remove("btnActive");
+            }
+            document.getElementById("payFast").classList.add("btnActive");
+            document.getElementById("alfa").classList.remove("btnActive");
+        }
+
+        function DivAlfaClicked() {
+            checker = 5;
+            document.getElementById("jc").classList.remove("btnActive");
+            document.getElementById("nift").classList.remove("btnActive");
+            if (document.getElementById("ipg")) {
+                document.getElementById("ipg").classList.remove("btnActive");
+            }
+            document.getElementById("payFast").classList.remove("btnActive");
+            document.getElementById("alfa").classList.add("btnActive");
+        }
+
+        function onClickPaymentButton(btn) {
+            var typ = "A";
+            var accno = Number($("#txtAccNo").val());
+            var pattern = new RegExp('^[\\d]{12}$');;
+            var lookup = "0" + $("#txtAccNo").val();
+
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+
+            let hashValue = params._suid_hash; // "some_value"
+            let timeValue = params._suj_time;
+            document.getElementById("referenceHash").value = params._suid_hash;
+            document.getElementById("referenceTime").value = params._suj_time;
+
+            if (!pattern.test(accno) && accno != null) {
+                alert("Please enter correct account number!")
+
+
+            } else {
+                //$('#exampleModal').modal('show');
+
+              
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // $('#payListModal').modal('show');//purana hogaya
+                //if (($("Label5").val() == 0)) {
+
+                //} else {
+                $("#newPayList").modal('show');
+                //}
+
+
+                if (($("#txtAccNo").val() == null || $("#txtAccNo").val() == "") && ($("#txtConNo").val() == null || $("#txtConNo").val() == "")) {
+                    alert("Please enter either the Account Number or Consumer Number.");
+                }
+                else if (
+
+                    (($("#txtAccNo").val() != null || $("#txtAccNo").val() != ""))  //&& ($("#txtConNo").val() != null || $("#txtConNo").val() != "")
+                    ||
+                    (($("#txtAccNo").val() != null || $("#txtAccNo").val() != ""))  //&& ($("#txtConNo").val() == null || $("#txtConNo").val() == "")
+                    ||
+                    (($("#txtAccNo").val() == null || $("#txtAccNo").val() == "")) //&& ($("#txtConNo").val() != null || $("#txtConNo").val() != "")
+                ) {
+                    $('#paymentSubmit').click(function (event) {
+                        redirect(event);
+                    });
+                    $('#niftpaymentSubmit').click(function (event) {
+                        redirect(event);
+                    });
+                    $('#ipgpaymentSubmit').click(function (event) {
+                        //$('#ipgModal').modal('hide');
+                        //$('#formModal').modal('show');
+                        //SRH 
+                        redirect(event);
+                    });
+                    $('#pfpaymentSubmit').click(function (event) {
+                        //$('#pfModal').modal('hide');
+                        //$('#formModal').modal('show');
+                        redirect(event);
+                    });
+                    $('#payPropaymentSubmit').click(function (event) {
+                        redirect(event);
+                    });
+                    //$('#formSubmit').click(function (event) {
+                    //    if (($("#form_Email").val() == null || $("#form_Num").val() == "") && ($("#form_ConNo").val() == null || $("#txtConNo").val() == "")) {
+                    //        alert("Please enter all details including Email Address, Name and Contact Number.");
+                    //    } else {
+                    //        redirect(event);
+                    //    }
+                    //});
+                }
+            }
+        }
+
+        function onclickpayProform() {
+
+            var re = /\S+@\S+\.\S+/;
+            //if (($("#txtName").val() == null || $("#txtName").val() == "") || ($("#txtEmail").val() == null || $("#txtEmail").val() == "") || ($("#txtMobile").val() == null || $("#txtMobile").val() == "")) {
+            if ($("#txtName").val().trim() == "") {
+                alert("Please enter Name!");
+                $('#txtName').css('border-color', 'red');
+                $('#txtMobile').css('border-color', '');
+                $('#txtEmail').css('border-color', '');
+            }
+            else if (!re.test($("#txtEmail").val())) {
+                alert("Please enter correct Email Address!");
+                $('#txtEmail').css('border-color', 'red');
+            }
+            else if (($("#txtMobile").val() == null || $("#txtMobile").val() == "")) {
+                alert("Please enter correct Mobile Number!");
+                $('#txtMobile').css('border-color', 'red');
+                $('#txtEmail').css('border-color', '');
+                $('#txtName').css('border-color', '');
+
+            }
+            else {
+
+                $('#txtName').css('border-color', '');
+                $('#txtEmail').css('border-color', '');
+                $('#txtMobile').css('border-color', '');
+                /*alert("Okay")*/
+                Redirect2PayPro();
+            }
+        }
+        function onclickIPGform() {
+            var re = /\S+@\S+\.\S+/;
+            if (($("#form_Name").val() == null || $("#form_Name").val() == "") || ($("#form_Email").val() == null || $("#form_Email").val() == "") || ($("#form_Num").val() == null || $("#form_Num").val() == "")) {
+                alert("Please enter correct Name, Email Address and Contact Number!");
+            }
+            else if (isNaN($("#form_Num").val())) {
+                alert("Please enter correct Mobile Number!");
+            }
+            else if (!re.test($("#form_Email").val())) {
+                alert("Please enter correct Email Address!");
+            }
+            else {
+                Redirect2IPG();
+                //redirect(event);
+            }
+        }
+
+        function redirect(redirect) {
+            if (checker == 1) {
+
+                var confirmed = document.getElementById('confirmationCheck');
+
+            } else if (checker == 2) { //Added by Zahra for NIFT on 1/6/2021
+
+                var confirmed = document.getElementById('confirmationNiftCheck');
+
+            } else if (checker == 0) {
+                var confirmed = document.getElementById('confirmationipgCheck');
+
+            } else if (checker == 3) {
+                var confirmed = document.getElementById('confirmationPFCheck');
+            }
+            else if (checker == 4) {
+                var confirmed = document.getElementById('confirmationPayProCheck');
+            }
+            else if (checker == 5) {
+                var confirmed = document.getElementById('confirmationAlfaCheck');
+            }
+            else if (checker == -1) {
+
+                alert("Please choose a method payment.");
+                return;
+            }
+
+            if (checker == 1) {
+                confirmed.addEventListener('change', e => {
+                    if (e.target.checked) {
+                        //do something
+                        document.getElementById("agreementAlert").style.display = "none";
+                    }
+                    else {
+                        document.getElementById("agreementAlert").style.display = "block";
+                    }
+                });
+
+            }
+            else if (checker == 2) {
+                confirmed.addEventListener('change', e => {
+                    if (e.target.checked) {
+                        //do something
+                        document.getElementById("niftagreementAlert").style.display = "none";
+                    }
+                    else {
+                        document.getElementById("niftagreementAlert").style.display = "block";
+                    }
+                });
+
+            }
+            else if (checker == 3) {
+                confirmed.addEventListener('change', e => {
+                    if (e.target.checked) {
+                        document.getElementById("pfagreementAlert").style.display = "none";
+                    }
+                    else {
+                        document.getElementById("pfagreementAlert").style.display = "block";
+                    }
+                });
+            } else if (checker == 4) {
+                confirmed.addEventListener('change', e => {
+                    if (e.target.checked) {
+                        document.getElementById("payProagreementAlert").style.display = "none";
+                    }
+                    else {
+                        document.getElementById("payProagreementAlert").style.display = "block";
+                    }
+                });
+            } else if (checker == 5) {
+                confirmed.addEventListener('change', e => {
+                    if (e.target.checked) {
+                        document.getElementById("alfaAgreementAlert").style.display = "none";
+                    }
+                    else {
+                        document.getElementById("alfaAgreementAlert").style.display = "block";
+                    }
+                });
+            } else {
+
+                confirmed.addEventListener('change', e => {
+                    if (e.target.checked) {
+                        //do something
+                        document.getElementById("ipgagreementAlert").style.display = "none";
+                    }
+                    else {
+                        document.getElementById("ipgagreementAlert").style.display = "block";
+                    }
+                });
+
+            }
+
+            if (confirmed.checked) {
+                if (checker == 0) {
+                    document.getElementById("ipgagreementAlert").style.display = "none";
+                    $('#ipgModal').modal('hide');
+                    $('#formModal').modal('show');
+                    //Redirect2IPG();
+                }
+                else if (checker == 1) {
+                    document.getElementById("agreementAlert").style.display = "none";
+
+                    Redirect2JazzCash();
+                } else if (checker == 2) {
+                    document.getElementById("niftagreementAlert").style.display = "none";
+
+                    Redirect2Nift();
+                } else if (checker == 3) {
+                    document.getElementById("pfagreementAlert").style.display = "none";
+
+                    Redirect2PayFast();
+                }
+                else if (checker == 4) {
+                    document.getElementById("payProagreementAlert").style.display = "none";
+                    $('#payProModal').modal('hide');
+                    $('#payProformModal').modal('show');
+                }
+                else if (checker == 5) {
+                    document.getElementById("alfaAgreementAlert").style.display = "none";
+
+                    Redirect2Alfa();
+                }
+
+
+            }
+            else {
+                if (checker == 0) {
+                    document.getElementById("ipgagreementAlert").style.display = "block";
+
+                }
+                else if (checker == 1) {
+                    document.getElementById("agreementAlert").style.display = "block";
+
+                } else if (checker == 2) {
+                    document.getElementById("niftagreementAlert").style.display = "block";
+
+                } else if (checker == 3) {
+                    document.getElementById("pfagreementAlert").style.display = "block";
+                }
+                else if (checker == 4) {
+                    document.getElementById("payProagreementAlert").style.display = "block";
+                }
+                else if (checker == 5) {
+                    document.getElementById("alfaAgreementAlert").style.display = "block";
+                }
+            }
+
+        }
+
+
+        function Redirect2JazzCash() {
+            swal({
+                title: 'Please wait',
+                timer: 500000,
+                allowOutsideClick: false,
+                imageUrl: '../ReBrand/kegif.gif',
+                imageWidth: '138px',
+                showConfirmButon: true,
+                confirmButtonClass: "confirm",
+                onOpen: function () {
+                    swal.hideLoading();
+                    //showConfirmButon: false
+                    //swal.showLoading()
+                }
+            }).then(function (result) {
+                if (result.dismiss === swal.DismissReason.timer) {
+                }
+            });
+            var lookup = $("#txtAccNo").val();
+            var cn = $("#txtConNo").val();
+            $.ajax({
+                type: "POST",
+                //url: "DuplicateBill/Rebrand/DuplicateBill.aspx/OnlinePaymentRedirection",
+                url: "DuplicateBill.aspx/OnlinePaymentRedirection",
+                data: '{AccountNumber: ' + lookup + ', Consumer : "' + cn + '"}',
+                //data: '{AccountNumber : '+lookup+', Mode: "A"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    swal({
+                        title: 'Please wait',
+                        allowOutsideClick: false,
+                        iconColor: '#f7941e',
+                        confirmButtonClass: "confirm",
+                        showConfirmButton: false,
+                        timer: 70000,
+                        onOpen: function () {
+                            iconColor: '#f7941e';
+                            //swal.showLoading()
+                            swal.hideLoading();
+                        }
+
+                    }).then(function (result) {
+                        if (result.dismiss === swal.DismissReason.timer) {
+                        }
+                    });
+
+                    console.log(response.d);
+                    var payJson = JSON.parse(response.d);
+                    if (payJson.error) {
+                        swal({
+                            iconColor: '#f7941e',
+                            title: "Error!",
+                            text: "Sorry, Something went wrong while fetching your data.",
+                            type: "error",
+                            showConfirmButton: false,
+                            confirmButtonClass: "confirm",
+                            onOpen: function () { swal.hideLoading(); }
+                        })
+                    } else {
+                        setPaymentData(payJson);
+                        $('#exampleModal').modal('hide');
+                        swal.close();
+                        document.getElementById("billingform").submit()
+                        //$("#billingform").on("submit", function () {
+                        //    window.open("jc.htm", "post", "width = 730, height = 345, left = 100, top = 100, resizable = yes, scrollbars = yes");
+                        //});
+                    }
+
+                },
+                failure: function (response) {
+
+                    swal({
+                        iconColor: '#f7941e',
+                        title: "Error!",
+                        text: "Sorry something went wrong.",
+                        type: "error"
+                    })
+
+
+                }
+            });
+        }
+
+
+        function Redirect2Nift() {
+            swal({
+                title: 'Please wait',
+                timer: 500000,
+                allowOutsideClick: false,
+                imageUrl: '../ReBrand/kegif.gif',
+                imageWidth: '138px',
+                showConfirmButon: true,
+                confirmButtonClass: "confirm",
+                onOpen: function () {
+                    swal.hideLoading();
+                    //showConfirmButon: false
+                    //swal.showLoading()
+                }
+            }).then(function (result) {
+                if (result.dismiss === swal.DismissReason.timer) {
+                }
+            });
+            var lookup = $("#txtAccNo").val();
+            var cn = $("#txtConNo").val();
+            $.ajax({
+                type: "POST",
+                //url: "DuplicateBill/Rebrand/DuplicateBill.aspx/OnlinePaymentRedirection",
+                url: "DuplicateBill.aspx/NIFTOnlinePaymentRedirection",
+                data: '{AccountNumber: ' + lookup + ', Consumer : "' + cn + '"}',
+                //data: '{AccountNumber : '+lookup+', Mode: "A"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    swal({
+                        title: 'Please wait',
+                        allowOutsideClick: false,
+                        iconColor: '#f7941e',
+                        confirmButtonClass: "confirm",
+                        showConfirmButton: false,
+                        timer: 70000,
+                        onOpen: function () {
+                            iconColor: '#f7941e';
+                            //swal.showLoading()
+                            swal.hideLoading();
+                        }
+
+                    }).then(function (result) {
+                        if (result.dismiss === swal.DismissReason.timer) {
+                        }
+                    });
+
+                    console.log(response.d);
+                    var NiftpayJson = JSON.parse(response.d);
+                    if (NiftpayJson.error) {
+                        swal({
+                            iconColor: '#f7941e',
+                            title: "Error!",
+                            text: "Sorry, Something went wrong while fetching your data.",
+                            type: "error",
+                            showConfirmButton: false,
+                            confirmButtonClass: "confirm",
+                            onOpen: function () { swal.hideLoading(); }
+                        })
+                    } else {
+                        setNiftPaymentData(NiftpayJson);
+                        $('#NiftModal').modal('hide');
+                        swal.close();
+                        document.getElementById("niftbillingform").submit()
+                        //$("#billingform").on("submit", function () {
+                        //    window.open("jc.htm", "post", "width = 730, height = 345, left = 100, top = 100, resizable = yes, scrollbars = yes");
+                        //});
+                    }
+
+                },
+                failure: function (response) {
+
+                    swal({
+                        iconColor: '#f7941e',
+                        title: "Error!",
+                        text: "Sorry something went wrong.",
+                        type: "error"
+                    })
+
+
+                }
+            });
+        }
+        function Redirect2PayPro() {
+
+            swal({
+                title: 'Please wait',
+                timer: 500000,
+                allowOutsideClick: false,
+                imageUrl: '../ReBrand/kegif.gif',
+                imageWidth: '138px',
+                showConfirmButon: true,
+                confirmButtonClass: "confirm",
+                onOpen: function () {
+                    swal.hideLoading();
+                }
+            }).then(function (result) {
+                if (result.dismiss === swal.DismissReason.timer) {
+                }
+            });
+            var lookup = $("#txtAccNo").val();
+            var cn = $("#txtConNo").val();
+            var email = $("#txtEmail").val();
+            var Mobile = $("#txtMobile").val();
+            var Name = $("#txtName").val();
+            var advanceAmount = $('#txtAdvancePayPro').val();
+            if (advanceAmount.trim() == "") {
+                advanceAmount = 0;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "DuplicateBill.aspx/PayProOnlinePaymentRedirection",
+                data: '{AccountNumber: ' + lookup + ', Consumer : "' + cn + '" , Mobile : "' + Mobile + '" , email : "' + email + '", Name : "' + Name + '", AdvanceAmount: "' + advanceAmount + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    swal({
+                        title: 'Please wait',
+                        allowOutsideClick: false,
+                        iconColor: '#f7941e',
+                        confirmButtonClass: "confirm",
+                        showConfirmButton: false,
+                        timer: 70000,
+                        onOpen: function () {
+                            iconColor: '#f7941e';
+                            //swal.showLoading()
+                            swal.hideLoading();
+                        }
+
+                    }).then(function (result) {
+                        if (result.dismiss === swal.DismissReason.timer) {
+                        }
+                    });
+                    var PayPROpayJson = JSON.parse(response.d);
+
+                    if (PayPROpayJson.success == true) {
+                        //  $('#payProModal').modal('hide');
+                        // window.location.href = PayPROpayJson.url;
+                        //  swal.hideLoading();
+                        $("#payProformModal").hide();
+                        $('.modal').modal('hide');
+                        console.log(PayPROpayJson.url);
+                        window.open(PayPROpayJson.url, '_blank');
+                        swal.close();
+                    }
+                    else if (PayPROpayJson.flag = "CommertialLimitExceed") {
+                        swal({
+                            iconColor: '#f7941e',
+                            title: "Error!",
+                            text: PayPROpayJson.msg,
+                            type: "error",
+                            showConfirmButton: false,
+                            confirmButtonClass: "confirm",
+                            onOpen: function () { swal.hideLoading(); }
+                        })
+                    }
+                    else if (PayPROpayJson.error) {
+                        swal({
+                            iconColor: '#f7941e',
+                            title: "Error!",
+                            text: PayPROpayJson.error,
+                            type: "error",
+                            showConfirmButton: false,
+                            confirmButtonClass: "confirm",
+                            onOpen: function () { swal.hideLoading(); }
+                        })
+                    } else {
+                        setPayPROPaymentData(PayPROpayJson);
+                        $('#payProModal').modal('hide');
+                        swal.close();
+                    }
+                    //  swal.hideLoading();
+                },
+                failure: function (response) {
+                    alert("Failed");
+                    swal({
+                        iconColor: '#f7941e',
+                        title: "Error!",
+                        text: "Sorry something went wrong.",
+                        type: "error"
+                    })
+                }
+            });
+        }
+        function Redirect2PayFast() {
+            swal({
+                title: 'Please wait',
+                timer: 500000,
+                allowOutsideClick: false,
+                imageUrl: '../ReBrand/kegif.gif',
+                imageWidth: '138px',
+                showConfirmButon: true,
+                confirmButtonClass: "confirm",
+                onOpen: function () {
+                    swal.hideLoading();
+                    //showConfirmButon: false
+                    //swal.showLoading()
+                }
+            }).then(function (result) {
+                if (result.dismiss === swal.DismissReason.timer) {
+                }
+            });
+            var lookup = $("#txtAccNo").val();
+            var cn = $("#txtConNo").val();
+            $.ajax({
+                type: "POST",
+                url: "DuplicateBill.aspx/PayFastOnlinePaymentRedirection",
+                data: '{AccountNumber: ' + lookup + ', Consumer : "' + cn + '"}',
+                //data: '{AccountNumber : '+lookup+', Mode: "A"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    swal({
+                        title: 'Please wait',
+                        allowOutsideClick: false,
+                        iconColor: '#f7941e',
+                        confirmButtonClass: "confirm",
+                        showConfirmButton: false,
+                        timer: 70000,
+                        onOpen: function () {
+                            iconColor: '#f7941e';
+                            //swal.showLoading()
+                            swal.hideLoading();
+                        }
+
+                    }).then(function (result) {
+                        if (result.dismiss === swal.DismissReason.timer) {
+                        }
+                    });
+
+                    console.log(response.d);
+                    var PayFastpayJson = JSON.parse(response.d);
+                    if (PayFastpayJson.error) {
+                        swal({
+                            iconColor: '#f7941e',
+                            title: "Error!",
+                            text: "Sorry, Something went wrong while fetching your data.",
+                            type: "error",
+                            showConfirmButton: false,
+                            confirmButtonClass: "confirm",
+                            onOpen: function () { swal.hideLoading(); }
+                        })
+                    } else {
+                        setPayFastPaymentData(PayFastpayJson);
+                        $('#pfModal').modal('hide');
+                        swal.close();
+                        document.getElementById("pfastbillingform").submit()
+                    }
+
+                },
+                failure: function (response) {
+                    swal({
+                        iconColor: '#f7941e',
+                        title: "Error!",
+                        text: "Sorry something went wrong.",
+                        type: "error"
+                    })
+                }
+            });
+        }
+
+        function Redirect2Alfa() {
+            swal({
+                title: 'Please wait',
+                timer: 500000,
+                allowOutsideClick: false,
+                imageUrl: '../ReBrand/kegif.gif',
+                imageWidth: '138px',
+                showConfirmButon: true,
+                confirmButtonClass: "confirm",
+                onOpen: function () {
+                    swal.hideLoading();
+                    //showConfirmButon: false
+                    //swal.showLoading()
+                }
+            }).then(function (result) {
+                if (result.dismiss === swal.DismissReason.timer) {
+                }
+            });
+            var lookup = $("#txtAccNo").val();
+            var cn = $("#txtConNo").val();
+            $.ajax({
+                type: "POST",
+                url: "DuplicateBill.aspx/PayFastOnlinePaymentRedirection",
+                data: '{AccountNumber: ' + lookup + ', Consumer : "' + cn + '"}',
+                //data: '{AccountNumber : '+lookup+', Mode: "A"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    swal({
+                        title: 'Please wait',
+                        allowOutsideClick: false,
+                        iconColor: '#f7941e',
+                        confirmButtonClass: "confirm",
+                        showConfirmButton: false,
+                        timer: 70000,
+                        onOpen: function () {
+                            iconColor: '#f7941e';
+                            //swal.showLoading()
+                            swal.hideLoading();
+                        }
+
+                    }).then(function (result) {
+                        if (result.dismiss === swal.DismissReason.timer) {
+                        }
+                    });
+
+                    console.log(response.d);
+                    var PayFastpayJson = JSON.parse(response.d);
+                    if (PayFastpayJson.error) {
+                        swal({
+                            iconColor: '#f7941e',
+                            title: "Error!",
+                            text: "Sorry, Something went wrong while fetching your data.",
+                            type: "error",
+                            showConfirmButton: false,
+                            confirmButtonClass: "confirm",
+                            onOpen: function () { swal.hideLoading(); }
+                        })
+                    } else {
+                        setPayFastPaymentData(PayFastpayJson);
+                        $('#pfModal').modal('hide');
+                        swal.close();
+                        document.getElementById("pfastbillingform").submit()
+                    }
+
+                },
+                failure: function (response) {
+                    swal({
+                        iconColor: '#f7941e',
+                        title: "Error!",
+                        text: "Sorry something went wrong.",
+                        type: "error"
+                    })
+                }
+            });
+        }
+
+        function Redirect2IPG() {
+            swal({
+                title: 'Please wait',
+                timer: 500000,
+                allowOutsideClick: false,
+                imageUrl: '../ReBrand/kegif.gif',
+                imageWidth: '138px',
+                //showConfirmButon: true,
+                confirmButtonClass: "confirm",
+                onOpen: function () {
+                    swal.hideLoading();
+                    //showConfirmButon: false
+                    //swal.showLoading()
+                }
+            }).then(function (result) {
+                if (result.dismiss === swal.DismissReason.timer) {
+                }
+            });
+            var lookup = $("#txtAccNo").val();
+            var cn = form_ConNo.value;//$("#txtConNo").val();
+            var email = form_Email.value;//$("#txtEmailAdd").val();
+            var number = form_Num.value;//$("#txtMobNo").val();
+            var tname = form_Name.value;
+            var refHash = $("#referenceHash").val();
+            var refTime = $("#referenceTime").val();
+            var advanceAmount = $('#txtAdvance').val();
+            if (advanceAmount.trim() == "") {
+                advanceAmount = 0;
+            }
+            $.ajax({
+                type: "POST",
+                //url: "DuplicateBill/Rebrand/DuplicateBill.aspx/OnlinePaymentRedirection",
+                url: "DuplicateBill.aspx/OnlineIPGPaymentRedirection",
+                //   url: "DuplicateBill.aspx/IPGPaymentRedirection",
+                data: '{AccountNumber: ' + lookup + ', Consumer : "' + cn + '", Email: "' + email + '", Number: "' + number + '", Name: "' + tname + '", referenceHash: "' + refHash + '", referenceTime: "' + refTime + '", AdvanceAmount: "' + advanceAmount + '"}',   //
+                //data: '{AccountNumber : '+lookup+', Mode: "A"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    swal({
+                        title: 'Please wait',
+                        allowOutsideClick: false,
+                        iconColor: '#f7941e',
+                        confirmButtonClass: "confirm",
+                        showConfirmButton: false,
+                        timer: 70000,
+                        onOpen: function () {
+                            iconColor: '#f7941e';
+                            //swal.showLoading()
+                            swal.hideLoading();
+                        }
+
+                    }).then(function (result) {
+                        if (result.dismiss === swal.DismissReason.timer) {
+                        }
+                    });
+
+                    console.log(response.d);
+                    var payJson = JSON.parse(response.d);
+                    if (payJson.error) {
+                        swal({
+                            iconColor: '#f7941e',
+                            title: "Error!",
+                            text: "Sorry, Something went wrong while fetching your data.",
+                            type: "error",
+                            showConfirmButton: false,
+                            confirmButtonClass: "confirm",
+                            onOpen: function () { swal.hideLoading(); }
+                        })
+                    } else {
+                        //  setPaymentData(payJson);
+                        setPaymentDataIPG(payJson);
+
+                        $('#exampleModal').modal('hide');
+                        swal.close();
+                        document.getElementById("ipgBilling").submit();
+                        //$("#billingform").on("submit", function () {
+                        //    window.open("jc.htm", "post", "width = 730, height = 345, left = 100, top = 100, resizable = yes, scrollbars = yes");
+                        //});
+                    }
+
+                },
+                failure: function (response) {
+
+                    swal({
+                        iconColor: '#f7941e',
+                        title: "Error!",
+                        text: "Sorry something went wrong.",
+                        type: "error"
+                    })
+
+
+                }
+            });
+        }
+
+
+
+
+
+
+        //function redirect2ipg() {
+        //        swal({
+        //            title: 'please wait',
+        //            timer: 500000,
+        //            allowoutsideclick: false,
+        //            imageurl: '../rebrand/kegif.gif',
+        //            imagewidth: '138px' ,
+        //            showconfirmbuton: true,
+        //            confirmbuttonclass: "confirm",
+        //            onopen: function () {
+        //                swal.hideloading();
+        //                //showconfirmbuton: false
+        //                //swal.showloading()
+        //            }
+        //        }).then(function (result) {
+        //            if (result.dismiss === swal.dismissreason.timer) {
+        //            }
+        //        });
+        //        var lookup = $("#txtaccno").val();
+        //        var cn = $("#txtconno").val();
+        //        var email = $("#txtemailadd").val();
+        //        var cell = $("#txtmobno").val();
+
+        //        //var data = {accountnumber: 'lookup', consumer: 'cn', email: 'email', mobile: 'cell'};
+
+        //        $.ajax({
+        //            type: "post",
+        //            //url: "duplicatebill/rebrand/duplicatebill.aspx/onlinepaymentredirection",
+        //            url: "duplicatebill.aspx/ipgpaymentredirection",
+        //            //'{accountnumber: ' + lookup + ', consumer : "' + cn + '"}'
+        //            data: '{accountnumber: ' + lookup + ', consumer : "' + cn + '"}',
+        //            //data: '{accountnumber : '+lookup+', mode: "a"}',
+        //            datatype: "json",
+        //            contenttype: "application/json; charset=utf-8",
+        //            success: function (response) {
+        //                swal({
+        //                    title: 'please wait',
+        //                    allowoutsideclick: false,
+        //                    iconcolor: '#f7941e',
+        //                    confirmbuttonclass: "confirm",
+        //                    showconfirmbutton: false,
+        //                    timer: 70000,
+        //                    onopen: function () {
+        //                        iconcolor: '#f7941e';
+        //                        //swal.showloading()
+        //                        swal.hideloading();
+        //                    }
+
+        //                }).then(function (result) {
+        //                    if (result.dismiss === swal.dismissreason.timer) {
+        //                    }
+        //                });
+
+        //                console.log(response.d);
+        //                var payjson = json.parse(response.d);
+        //                if (payjson.error) {
+        //                    swal({
+        //                        iconcolor: '#f7941e',
+        //                        title: "error!",
+        //                        text: "sorry, something went wrong while fetching your data.",
+        //                        type: "error",
+        //                        showconfirmbutton:false,
+        //                        confirmbuttonclass:"confirm",
+        //                        onopen: function () { swal.hideloading();}
+        //                    })
+        //                } else {
+        //                    setpaymentdataipg(payjson);
+        //                    $('#examplemodal').modal('hide');
+        //                    swal.close();
+        //                    document.getelementbyid("ipgbilling").submit()
+        //                    //$("#billingform").on("submit", function () {
+        //                    //    window.open("jc.htm", "post", "width = 730, height = 345, left = 100, top = 100, resizable = yes, scrollbars = yes");
+        //                    //});
+        //                }
+
+        //           },
+        //            failure: function (response) {
+
+        //                swal({
+        //                    iconcolor: '#f7941e',
+        //                    title: "error!",
+        //                    text: "sorry something went wrong.",
+        //                    type: "error"
+        //                })
+
+
+        //            }
+        //        });
+        //    }
+
+
+
+        //make button visible upon selecting payment option
+        function makeButtonVisible(clck) {
+
+
+            document.getElementById("confirmButton").style.display = "none";
+            document.getElementById("confirmButton").style.display = "block";
+        }// as part of old paylist modal, ab farigh karo ise
+
+        function onClickConfirm(event) {
+
+
+            //do selection of payment modal here
+            //check on the radio button name and tada, load web page accordingly
+
+            if (checker == -1) {
+                alert("Please choose a method payment.");
+
+                return;
+            }
+
+            $('#newPayList').modal('hide');
+            if (checker == 0) {
+                $('#ipgModal').modal('show');
+            }
+            else if (checker == 1) {
+                $('#exampleModal').modal('show');
+            } else if (checker == 2) {
+                $('#NiftModal').modal('show');
+            }
+            else if (checker == 3) {
+                $('#pfModal').modal('show');
+
+            }
+            else if (checker == 4) {
+                $('#payProModal').modal('show');
+
+            }
+            else if (checker == 5) {
+                $('#alfaModal').modal('show');
+
+            }
+
+        }
+
+        function setPaymentDataIPG(payjson) {
+
+
+
+            $("#access_key").attr("value", payjson.access_key)
+            //$("#security_key").attr("value", payjson.security_key);
+            $("#profile_id").attr("value", payjson.profile_id);
+            $("#transaction_type").attr("value", payjson.transaction_type);
+            $("#amount").attr("value", payjson.amount);
+            $("#currency").attr("value", payjson.currency);
+            $("#reference_number").attr("value", payjson.reference_number);
+            $("#locale").attr("value", payjson.locale);
+            $("#transaction_uuid").attr("value", payjson.transaction_uuid);
+            $("#signed_date_time").attr("value", payjson.signed_date_time)
+            $("#signed_field_names").attr("value", payjson.signed_field_names);
+            $("#bill_to_address_city").attr("value", payjson.bill_to_address_city);
+            $("#bill_to_address_country").attr("value", payjson.bill_to_address_country);
+            $("#bill_to_address_line1").attr("value", payjson.bill_to_address_line1);
+            $("#bill_to_address_postal_code").attr("value", payjson.bill_to_address_postal_code);
+            $("#bill_to_address_state").attr("value", payjson.bill_to_address_state);
+            $("#bill_to_forename").attr("value", payjson.bill_to_forename);
+            $("#bill_to_phone").attr("value", payjson.bill_to_phone);
+            $("#bill_to_surname").attr("value", payjson.bill_to_surname);
+            $("#bill_to_email").attr("value", payjson.bill_to_email);
+            $("#consumer_id").attr("value", payjson.consumer_id);
+            $("#customer_ip_address").attr("value", payjson.customer_ip_address);
+            $("#signature").attr("value", payjson.signature);
+            //$("#signed_field_names").attr("value", payjson.signed_field_names);
+
+            $("#merchant_defined_data1").attr("value", payjson.merchant_defined_data1);
+            $("#merchant_defined_data2").attr("value", payjson.merchant_defined_data2);
+            $("#merchant_defined_data4").attr("value", payjson.merchant_defined_data4);
+            $("#merchant_defined_data5").attr("value", payjson.merchant_defined_data5);
+            $("#merchant_defined_data7").attr("value", payjson.merchant_defined_data7);
+            $("#merchant_defined_data20").attr("value", payjson.merchant_defined_data20);
+
+
+        }
+
+
+        function setPaymentData(payjson) {
+
+            $("#billingform").attr("action", payjson.url)
+            // $("#pp_Version").attr("value", payjson.version);
+            $("#pp_TxnType").attr("value", payjson.txntype);
+            $("#pp_Language").attr("value", payjson.language);
+            $("#pp_MerchantID").attr("value", payjson.MerchantId);
+            //$("#pp_SubMerchantID" ).attr("value", payjson.submerchantID);
+            $("#pp_Password").attr("value", payjson.password);
+            $("#pp_TxnRefNo").attr("value", payjson.TxnRefNo);
+            $("#pp_Amount").attr("value", payjson.payableamountstring);
+            $("#pp_TxnCurrency").attr("value", payjson.currency);
+            $("#pp_TxnDateTime").attr("value", payjson.curtime);
+            $("#pp_BillReference").attr("value", payjson.BillReference);
+            $("#pp_Description").attr("value", payjson.Description)
+            $("#pp_TxnExpiryDateTime").attr("value", payjson.expirytime);
+            $("#pp_ReturnURL").attr("value", payjson.returnurl);
+            $("#pp_SecureHash").attr("value", payjson.hashmessage);
+            $("#ppmpf_1").attr("value", payjson.ppmpf_1);
+            //$("#ppmpf_2").attr("value", payjson.ppmpf_2);
+        }
+
+        function setNiftPaymentData(payjson) {
+
+            $("#niftbillingform").attr("action", payjson.pp_PostUrl)
+            $("#pp_Version").attr("value", payjson.version);
+            $("#niftpp_TxnType").attr("value", payjson.pp_TxnType);
+            $("#niftpp_Language").attr("value", payjson.pp_Language);
+            $("#niftpp_MerchantID").attr("value", payjson.pp_MerchantID);
+            //$("#pp_SubMerchantID" ).attr("value", payjson.submerchantID);
+            $("#niftpp_Password").attr("value", payjson.pp_Password);
+            $("#niftpp_TxnRefNo").attr("value", payjson.pp_TxnRefNo);
+            $("#niftpp_Amount").attr("value", payjson.pp_Amount);
+            $("#niftpp_TxnCurrency").attr("value", payjson.pp_TxnCurrency);
+            $("#niftpp_TxnDateTime").attr("value", payjson.pp_TxnDateTime);
+            $("#niftpp_BillReference").attr("value", payjson.pp_BillReference);
+            $("#niftpp_Description").attr("value", payjson.pp_Description)
+            $("#niftpp_TxnExpiryDateTime").attr("value", payjson.pp_TxnExpiryDateTime);
+            $("#niftpp_ReturnURL").attr("value", payjson.pp_ReturnURL);
+            $("#niftppmpf_1").attr("value", payjson.ppmpf_1);
+            $("#niftpp_SecureHash").attr("value", calculateHash());
+            //$("#niftpp_SecureHash").attr("value", payjson.pp_SecureHash);
+            //$("#niftbillingform").attr("action", payjson.pp_PostUrl)
+            //$("#pp_Version").attr("value", "1.1");
+            //$("#niftpp_Language").attr("value", "EN");
+            //$("#niftpp_MerchantID").attr("value","KEL001");
+            //$("#niftpp_Password").attr("value", "opEgWHrNiuE=");
+            //$("#niftpp_TxnRefNo").attr("value", "T20210603170519");
+            //$("#niftpp_Amount").attr("value", payjson.pp_Amount);
+            //$("#niftpp_TxnCurrency").attr("value", "PKR");
+            //$("#niftpp_TxnDateTime").attr("value", "20210603170504");
+            //$("#niftpp_BillReference").attr("value", payjson.pp_BillReference);
+            //$("#niftpp_Description").attr("value", payjson.pp_Description)
+            //$("#niftpp_TxnExpiryDateTime").attr("value", "20210604170504");
+
+            //$("#niftpp_ReturnURL").attr("value", payjson.pp_ReturnURL);
+            //$("#niftpp_SecureHash").attr("value", calculateHash(payjson));
+            //$("#niftppmpf_1").attr("value", payjson.ppmpf_1);
+            ////$("#ppmpf_2").attr("value", payjson.ppmpf_2);
+        }
+
+        function setPayFastPaymentData(payjson) {
+
+            $("#pfastbillingform").attr("action", payjson.POST_URL)
+            $("#pfast_MERCHANT_ID").attr("value", payjson.MERCHANT_ID);
+            /*$("#pfast_GRANT_TYPE").attr("value", payjson.GRANT_TYPE);*/
+            /*$("#pfast_POST_URL").attr("value", payjson.POST_URL);*/
+            $("#pfast_SECURED_KEY").attr("value", payjson.SECURED_KEY);
+            $("#pfast_TOKEN").attr("value", payjson.TOKEN);
+
+            $("#pfast_MERCHANT_NAME").attr("value", payjson.MERCHANT_NAME);
+            $("#pfast_PROCCODE").attr("value", payjson.PROCCODE);
+            $("#pfast_TXNAMT").attr("value", payjson.TXNAMT);
+            $("#pfast_CUSTOMER_ID").attr("value", payjson.CUSTOMER_ID);
+            $("#pfast_CUSTOMER_MOBILE_NO").attr("value", payjson.CUSTOMER_MOBILE_NO);
+            $("#pfast_CUSTOMER_EMAIL_ADDRESS").attr("value", payjson.CUSTOMER_EMAIL_ADDRESS);
+            $("#pfast_SIGNATURE").attr("value", payjson.SIGNATURE)
+            $("#pfast_VERSION").attr("value", payjson.VERSION);
+            $("#pfast_TXNDESC").attr("value", payjson.TXNDESC);
+            $("#pfast_SUCCESS_URL").attr("value", payjson.SUCCESS_URL);
+            $("#pfast_FAILURE_URL").attr("value", payjson.FAILURE_URL);
+            $("#pfast_CHECKOUT_URL").attr("value", payjson.FAILURE_URL);
+            $("#pfast_BASKET_ID").attr("value", payjson.BASKET_ID);
+            $("#pfast_ORDER_DATE").attr("value", payjson.ORDER_DATE);
+            /*$("#pfast_STORE_ID").attr("value", payjson.STORE_ID);*/
+            $("#pfast_CURRENCY_CODE").attr("value", payjson.CURRENCY_CODE);
+            $("#pfast_BILL_NUMBER").attr("value", payjson.BILL_NUMBER);
+            /*$("#pfast_TRAN_TYPE").attr("value", payjson.TRAN_TYPE);*/
+            //$("#pfast_TRANSACTION_ID").attr("value", payjson.TRANSACTION_ID);
+            //$("#pfast_RDV_MESSAGE_KEY").attr("value", payjson.RDV_MESSAGE_KEY);
+            //$("#pfast_ERR_CODE").attr("value", payjson.ERR_CODE);
+            //$("#pfast_ERR_MSG").attr("value", payjson.ERR_MSG);
+        }
+        function setPayPROPaymentData(payjson) {
+            // $("#payProbillingform").attr("action", payjson.POST_URL)
+            $("#payPro_MerchantId").attr("value", payjson.MerchantId)
+            $("#payPro_OrderNumber").attr("value", payjson.OrderNumber);
+            $("#payPro_OrderAmount").attr("value", payjson.OrderAmount);
+            $("#payPro_TOKEN").attr("value", payjson.Token);
+            $("#payPro_OrderDueDate").attr("value", payjson.OrderDueDate);
+            $("#payPro_OrderType").attr("value", payjson.OrderType);
+            $("#payPro_IssueDate").attr("value", payjson.IssueDate);
+            $("#payPro_CustomerName").attr("value", payjson.CustomerName);
+            $("#payPro_OrderExpireAfterSeconds").attr("value", payjson.OrderExpireAfterSeconds);
+            $("#payPro_CustomerMobile").attr("value", payjson.CustomerMobile);
+            $("#payPro_CustomerEmail").attr("value", payjson.CustomerEmail);
+            $("#payPro_CustomerAddress").attr("value", payjson.CustomerAddress)
+            $("#payPro_Description").attr("value", payjson.Description);
+            $("#payPro_CustomerAccount").attr("value", payjson.CustomerAccount);
+        }
+
+        function calculateHash() {
+            var inputs = {
+                "pp_Amount": document.getElementById("niftpp_Amount").value,
+                "pp_BillReference": document.getElementById("niftpp_BillReference").value,
+                "pp_Description": document.getElementById("niftpp_Description").value,
+                "pp_Language": document.getElementById("niftpp_Language").value,
+                "pp_MerchantID": document.getElementById("niftpp_MerchantID").value,
+                "pp_Password": document.getElementById("niftpp_Password").value,
+                "pp_ReturnURL": document.getElementById("niftpp_ReturnURL").value,
+                "pp_TxnCurrency": document.getElementById("niftpp_TxnCurrency").value,
+                "pp_TxnDateTime": document.getElementById("niftpp_TxnDateTime").value,
+                "pp_TxnExpiryDateTime": document.getElementById("niftpp_TxnExpiryDateTime").value,
+                "pp_TxnRefNo": document.getElementById("niftpp_TxnRefNo").value,
+                "pp_Version": document.getElementById("niftpp_Version").value,
+                "ppmpf_1": document.getElementById("niftppmpf_1").value,
+                "ppmpf_2": document.getElementById("niftppmpf_2").value,
+                "ppmpf_3": document.getElementById("niftppmpf_3").value,
+                "ppmpf_4": document.getElementById("niftppmpf_4").value,
+                "ppmpf_5": document.getElementById("niftppmpf_5").value
+            }
+
+            let orderedInputs = {};
+            let concatenatedString = document.getElementById("nift_salt").value;
+
+            Object.keys(inputs).sort().forEach(key => { concatenatedString = !(inputs[key] === "" || inputs[key] == undefined) ? concatenatedString + "&" + inputs[key] : concatenatedString; });
+
+            console.log(concatenatedString);
+            var hash = CryptoJS.HmacSHA256(concatenatedString, document.getElementById("nift_salt").value);
+            var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+
+            console.log(hash.toString());
+            document.getElementById("niftpp_SecureHash").value = hash.toString();
+
+
+            //return true;
+        }
+
+
+    </script>
+
+    <style>
+        .divRow {
+            background-color: #CCCCCC;
+            border-style: groove;
+            cursor: pointer;
+        }
+
+            .divRow:hover {
+                background: 0 0 11px rgba(33,33,33,.2);
+                background-color: gray;
+            }
+
+        /*#pointer {
+	  width: 200px;
+	  height: 40px;
+	  position: relative;
+	  background: gray;
+	}
+	#pointer:after {
+	  content: "";
+	  position: absolute;
+	  left: 0;
+	  bottom: 0;
+	  width: 0;
+	  height: 0;
+	  border-left: 20px solid gray;
+	  border-top: 20px solid transparent;
+	  border-bottom: 20px solid transparent;
+	}
+	#pointer:before {
+	  content: "";
+	  position: absolute;
+	  right: -20px;
+	  bottom: 0;
+	  width: 0;
+	  height: 0;
+	  border-left: 20px solid gray;
+	  border-top: 20px solid transparent;
+	  border-bottom: 20px solid transparent;
+	}*/
+
+
+
+
+        html {
+            background-image: none;
+        }
+
+        body {
+            background-image: none;
+        }
+
+        .ffldwarn {
+            font-size: 10px !important;
+        }
+
+        .kesctab {
+            background-color: White;
+            border: 0;
+            text-decoration: none;
+        }
+
+        .ffldtitle {
+            font-size: 12px !important;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .image-hover-highlight {
+            -webkit-transition: all 0.50s;
+            transition: all 0.50s;
+            &:hover;
+
+        {
+            border: 1px solid gray;
+            filter: brightness(130%);
+            -webkit-filter: brightness(130%);
+            -moz-filter: brightness(130%);
+            -o-filter: brightness(130%);
+            -ms-filter: brightness(130%);
+            -webkit-transition: all 0.50s;
+            transition: all 0.50s;
+        }
+
+        .confirm-button {
+            display: none;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            margin-top: auto;
+            margin-bottom: auto;
+            vertical-align: auto;
+            cursor: pointer;
+        }
+
+        .modal-body p {
+            word-wrap: break-word;
+            overflow: auto;
+        }
+
+        .modal::before {
+            overflow-y: auto;
+        }
+    </style>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-24122914-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <form id="billingform" method="post" target="post" onsubmit="window.open('jc.htm', 'post', 'width = 730, height = 345, left = 100, top = 100, resizable = yes, scrollbars = yes');">
+        <input type="hidden" id="pp_Version" name="pp_Version" value="1.1">
+        <input type="hidden" id="pp_TxnType" name="pp_TxnType" value="">
+        <input type="hidden" id="pp_Language" name="pp_Language" value="">
+        <input type="hidden" id="pp_MerchantID" name="pp_MerchantID" value="">
+        <input type="hidden" id="pp_Password" name="pp_Password" value="">
+        <input type="hidden" id="pp_TxnRefNo" name="pp_TxnRefNo" value="">
+        <input type="hidden" id="pp_Amount" name="pp_Amount" value="">
+        <input type="hidden" id="pp_TxnCurrency" name="pp_TxnCurrency" value="">
+        <input type="hidden" id="pp_TxnDateTime" name="pp_TxnDateTime" value="">
+        <input type="hidden" id="pp_BillReference" name="pp_BillReference" value="">
+        <input type="hidden" id="pp_Description" name="pp_Description" value="">
+        <input type="hidden" id="pp_TxnExpiryDateTime" name="pp_TxnExpiryDateTime" value="">
+        <input type="hidden" id="ppmpf_1" name="ppmpf_1" value="">
+        
+        <input type="hidden" id="pp_ReturnURL" name="pp_ReturnURL" value="">
+        <input type="hidden" id="pp_SecureHash" name="pp_SecureHash" value="">
+        <input type="hidden" name="Jazz Cash" value="Jazz Cash">
+    <input type="hidden" name="__ncforminfo" value="mRyj5ZHkI0r3OCLvUT0Cau6_AeZ65iye1qAyW4UAVE5d64eBWSGVZi9VGfmlrC2vzjH8PeSD_NBLlK6Q8H3I8kp0wIHSqPK5m-72a7J2R4vAAeyzHqzpxftXZ0vRe2dX6bd37KfvKHfZK0LbODxGSkO5ybC7-h45skCp7TkPo6wngxn1RweJjti184hIwJJ2RctCCW_Hs-K8UGQPW9lcAgh4nSEke6DccDRtQup4pyI0kqT4UneShaM3Qwde71gW"></form>
+
+    <input name="nift_salt" type="hidden" id="nift_salt" value="qqSJEncywcI=">
+    <form id="niftbillingform" target="s2bpay_popup_window" onsubmit="" name="niftForm" method="POST" action="https://uat-merchants.niftepay.pk/CustomerPortal/transactionmanagement/merchantform">
+        <input type="hidden" class="textboxStyle" id="niftpp_Version" name="pp_Version" value="1.1">
+        <input type="hidden" class="textboxStyle" id="niftpp_Language" name="pp_Language" value="EN">
+        <input type="hidden" class="textboxStyle" id="niftpp_MerchantID" name="pp_MerchantID" value="" placeholder="Enter merchant id">
+        <input type="hidden" class="textboxStyle" id="niftpp_Password" name="pp_Password" value="0123456789" placeholder="Enter password">
+        <input type="hidden" class="textboxStyle" id="niftpp_Amount" name="pp_Amount" value="100">
+        <input type="hidden" class="textboxStyle" id="niftpp_TxnRefNo" name="pp_TxnRefNo" value="T20200219172009">
+        <input type="hidden" class="textboxStyle" id="niftpp_TxnDateTime" name="pp_TxnDateTime" value="20200219172008">
+        <input type="hidden" class="textboxStyle" id="niftpp_TxnExpiryDateTime" name="pp_TxnExpiryDateTime" value="20200220172008">
+        <input type="hidden" class="textboxStyle" id="niftpp_BillReference" name="pp_BillReference" value="20000122455">
+        <input type="hidden" class="textboxStyle" id="niftpp_Description" name="pp_Description" value="SAMPLE_DES">
+        <input type="hidden" class="textboxStyle biggerTextBox" id="niftpp_ReturnURL" name="pp_ReturnURL" value="" placeholder="Enter return URL">
+        <input type="hidden" class="textboxStyle" id="niftpp_TxnCurrency" name="pp_TxnCurrency" value="PKR">
+        <input type="hidden" class="textboxStyle" id="niftppmpf_1" name="ppmpf_1" value="" placeholder="Parameter bounced back">
+        <input type="hidden" class="textboxStyle" id="niftppmpf_2" name="ppmpf_2" value="" placeholder="Parameter bounced back">
+        <input type="hidden" class="textboxStyle" id="niftppmpf_3" name="ppmpf_3" value="" placeholder="Parameter bounced back">
+        <input type="hidden" class="textboxStyle" id="niftppmpf_4" name="ppmpf_4" value="" placeholder="Parameter bounced back">
+        <input type="hidden" class="textboxStyle" id="niftppmpf_5" name="ppmpf_5" value="" placeholder="Parameter bounced back">
+        <input type="hidden" class="textboxStyle" id="niftpp_SecureHash" name="pp_SecureHash" value="">
+        <input type="hidden" value="Submit">
+    </form>
+
+    
+
+
+
+    
+
+    
+        <form id="pfastbillingform" target="post" onsubmit="" name="pfastForm" method="post" action="https://ipg1.apps.net.pk/Ecommerce/api/Transaction/PostTransaction">
+    
+
+        <input type="hidden" class="textboxStyle" id="pfast_MERCHANT_ID" name="MERCHANT_ID" value="">
+        
+        <input type="hidden" class="textboxStyle" id="pfast_POST_URL" name="POST_URL" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_SECURED_KEY" name="SECURED_KEY" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_TOKEN" name="TOKEN" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_MERCHANT_NAME" name="MERCHANT_NAME" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_PROCCODE" name="PROCCODE" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_TXNAMT" name="TXNAMT" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_CUSTOMER_ID" name="CUSTOMER_ID" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_CUSTOMER_MOBILE_NO" name="CUSTOMER_MOBILE_NO" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_CUSTOMER_EMAIL_ADDRESS" name="CUSTOMER_EMAIL_ADDRESS" value="">
+        <input type="hidden" class="textboxStyle biggerTextBox" id="pfast_SUCCESS_URL" name="SUCCESS_URL" value="">
+        <input type="hidden" class="textboxStyle biggerTextBox" id="pfast_FAILURE_URL" name="FAILURE_URL" value="">
+        <input type="hidden" class="textboxStyle biggerTextBox" id="pfast_CHECKOUT_URL" name="CHECKOUT_URL" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_SIGNATURE" name="SIGNATURE" value="PKR">
+        <input type="hidden" class="textboxStyle" id="pfast_VERSION" name="VERSION" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_TXNDESC" name="TXNDESC" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_BASKET_ID" name="BASKET_ID" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_ORDER_DATE" name="ORDER_DATE" value="">
+        
+        <input type="hidden" class="textboxStyle" id="pfast_CURRENCY_CODE" name="CURRENCY_CODE" value="">
+        <input type="hidden" class="textboxStyle" id="pfast_BILL_NUMBER" name="BILL_NUMBER" value="">
+        
+        
+        
+        <input type="hidden" value="Submit">
+    </form>
+
+    <form id="alfabillingform" target="post" onsubmit="" name="pfastForm" method="post" action="https://ipg1.apps.net.pk/Ecommerce/api/Transaction/PostTransaction">
+    
+
+        <input type="hidden" class="textboxStyle" id="alfa_MERCHANT_ID" name="MERCHANT_ID" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_POST_URL" name="POST_URL" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_SECURED_KEY" name="SECURED_KEY" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_TOKEN" name="TOKEN" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_MERCHANT_NAME" name="MERCHANT_NAME" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_PROCCODE" name="PROCCODE" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_TXNAMT" name="TXNAMT" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_CUSTOMER_ID" name="CUSTOMER_ID" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_CUSTOMER_MOBILE_NO" name="CUSTOMER_MOBILE_NO" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_CUSTOMER_EMAIL_ADDRESS" name="CUSTOMER_EMAIL_ADDRESS" value="">
+        <input type="hidden" class="textboxStyle biggerTextBox" id="alfa_SUCCESS_URL" name="SUCCESS_URL" value="">
+        <input type="hidden" class="textboxStyle biggerTextBox" id="alfa_FAILURE_URL" name="FAILURE_URL" value="">
+        <input type="hidden" class="textboxStyle biggerTextBox" id="alfa_CHECKOUT_URL" name="CHECKOUT_URL" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_SIGNATURE" name="SIGNATURE" value="PKR">
+        <input type="hidden" class="textboxStyle" id="alfa_VERSION" name="VERSION" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_TXNDESC" name="TXNDESC" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_BASKET_ID" name="BASKET_ID" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_ORDER_DATE" name="ORDER_DATE" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_CURRENCY_CODE" name="CURRENCY_CODE" value="">
+        <input type="hidden" class="textboxStyle" id="alfa_BILL_NUMBER" name="BILL_NUMBER" value="">
+        <input type="hidden" value="Submit">
+    </form>
+
+
+
+
+    <input name="referenceHash" type="hidden" id="referenceHash" class="form-control">
+    <input name="referenceTime" type="hidden" id="referenceTime" class="form-control">
+
+    
+    
+    <form id="ipgBilling" method="post" action="https://secureacceptance.cybersource.com/pay" target="post" onsubmit="window.open('ipg.htm', 'post', 'width = 730, height = 345, left = 100, top = 100, resizable = yes, scrollbars = yes');">
+        <input type="hidden" id="access_key" name="access_key" value="1.1">
+        
+        <input type="hidden" id="profile_id" name="profile_id" value="">
+        <input type="hidden" id="transaction_type" name="transaction_type" value="">
+        <input type="hidden" id="amount" name="amount" value="">
+        <input type="hidden" id="currency" name="currency" value="">
+        <input type="hidden" id="reference_number" name="reference_number" value="">
+        <input type="hidden" id="locale" name="locale" value="">
+        <input type="hidden" id="account_number" name="account_number" value="">
+        <input type="hidden" id="transaction_uuid" name="transaction_uuid" value="">
+        <input type="hidden" id="bill_to_address_city" name="bill_to_address_city" value="">
+        <input type="hidden" id="bill_to_address_country" name="bill_to_address_country" value="">
+        <input type="hidden" id="bill_to_address_line1" name="bill_to_address_line1" value="">
+        <input type="hidden" id="bill_to_address_postal_code" name="bill_to_address_postal_code" value="">
+        <input type="hidden" id="bill_to_address_state" name="bill_to_address_state" value="">
+        <input type="hidden" id="bill_to_email" name="bill_to_email" value="">
+        <input type="hidden" id="bill_to_phone" name="bill_to_phone" value="">
+        <input type="hidden" id="bill_to_forename" name="bill_to_forename" value="">
+        <input type="hidden" id="bill_to_surname" name="bill_to_surname" value="">
+        <input type="hidden" id="consumer_id" name="consumer_id" value="">
+        <input type="hidden" id="customer_ip_address" name="customer_ip_address" value="">
+
+        <input type="hidden" id="merchant_defined_data1" name="merchant_defined_data1" value="">
+        <input type="hidden" id="merchant_defined_data2" name="merchant_defined_data2" value="">
+        <input type="hidden" id="merchant_defined_data4" name="merchant_defined_data4" value="">
+        <input type="hidden" id="merchant_defined_data5" name="merchant_defined_data5" value="">
+        <input type="hidden" id="merchant_defined_data7" name="merchant_defined_data7" value="">
+        <input type="hidden" id="merchant_defined_data20" name="merchant_defined_data20" value="">
+
+
+
+        <input type="hidden" id="signed_date_time" name="signed_date_time" value="">
+        <input type="hidden" id="signed_field_names" name="signed_field_names" value="">
+        <input type="hidden" id="signature" name="signature" value="">
+        <input type="hidden" name="IPG" value="IPG">
+    </form>
+    <form id="payProbillingform" target="post" onsubmit="" name="payProbillingform" method="post" action="https://demoapi.paypro.com.pk/v2/ppro/co">
+        <input type="hidden" class="textboxStyle" id="payPro_MerchantId" name="payPro_MerchantId" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_OrderNumber" name="payPro_OrderNumber" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_OrderAmount" name="payPro_OrderAmount" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_TOKEN" name="TOKEN" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_OrderDueDate" name="payPro_OrderDueDate" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_OrderType" name="payPro_OrderType" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_IssueDate" name="payPro_IssueDate" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_CustomerName" name="payPro_CustomerName" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_OrderExpireAfterSeconds" name="payPro_OrderExpireAfterSeconds" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_CustomerMobile" name="payPro_CustomerMobile" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_CustomerEmail" name="payPro_CustomerEmail" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_CustomerAddress" name="payPro_CustomerAddress" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_Description" name="payPro_Description" value="">
+        <input type="hidden" class="textboxStyle" id="payPro_CustomerAccount" name="payPro_CustomerAccount" value="">
+        <input type="hidden" value="Submit">
+    </form>
+    <style>
+        .form-group input {
+    padding: 12px 25px;
+    border-radius: 13px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background-color: #F7F7F7C2;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+        .form-group TextBox {
+    padding: 12px 25px;
+    border-radius: 13px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background-color: #F7F7F7C2;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+    </style>
+
+    <div class="form-wrapper">
+    <form method="post" action="./DuplicateBill.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="wdUJC6bALODgUmx9vqhfzwI3QulnkfxFRavrtcIJYeL0kca1X0J1ifauk3ACXtDx+bMsnvUcPpruQ2jTang1EuMvAGXIeDMKkzhH1L4ca3bOcl31CDSlECui+bDTbwKgxuadAWW8RHGW+FXeZR/wGv/JKU6cH1zLcReS9vDCX6lLg5ONQ8Mg/s5kjLZMQH9mLHKjfCCvss4uOSRKY/UDPoG7Z2dE4BYQtHKrjt71TBIxyDzrgNG5hCo+NAmVtM99KIlUAKI2dSobJAfKQZJErwsWCIVOLnaF3b8teq9PKwBvKxBPwrEV6YENAglGO+JJbCYGq+4uh0dT9m6LahrRBz8Oi1PjwgI7FKzdr2FWt6Aytv3GD3AYkMBQGIoY45LF3tihZ1EWNrUHzmy3K/dHMvPXWamazuP5hAFaNc7THUqV755ExktGGP/jC/iORPnr4CcRfWxdTE7b/GQbnCYH3xSf+gI3DzlY3xhjG8wwqxU=">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=7czjJeSNrL4vsUq19MIYV-k_0VqExQ1Y9TyOzbiqqyYXF0ipUFaZnZ_JYjXlGtK7cKmdLemO7GnpHZbiuSZA8Xsf7DaWarxNPEaDsXHnM441&amp;t=638901716248157332" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=WgLM7YT56D5EaD39R2lAJ33TKO0yg_TKF4zPtGFssjwIMxjj97QUJ2oMfsAA_WdjiS5XExYaBJiy-p4lLx8hNReUJWBvTv3Vrhk4UqsppMU-_YGFHxRsjL3JtQvnlWnw6XvSYBPXysJ04umB95IjW1FtLxizqEKd0vPj-kEjx3g1&amp;t=ffffffff93d1c106" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=FgnAgO7991bEdh33GjLj23CBfc7-VRfznf8naQbyyUx8clBU9yWyMHl_1XcnvmRx4xG6s89wD2OUXgOn8he6lA7XEULz-oxZd_b7n_q4TOrVlSLLru4VCoTmYCr407FPoLJWqOdDJ2FR_luX8YjR9ySPrskCgfrZlY0EgJgfoU7ri2trtaNIWNcLMMf4l6Kp0&amp;t=5c0e0825" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=4GUhNCeq5KW01EnNinz2I_4lUugUMyqP0MZ8JhjClqGRaz9k69FBcYjpzGNyBQ1Tvp4QVk0MYeQ9txI9HUPNLhIFVMgtBwUcwKlrJlFYNQ7ZNCMY362B_Da_Q5udUU5y4iTBrv58APqg6zhZIAHpaazr0F127MAGUJ6rBZqYdvqi7DFvESFyIi1X72tiT91_0&amp;t=5c0e0825" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="C3B80535">
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="jRNZtEJh4iAsFycKyXOlPzOj85vZeYauB+7bDim8o7VY9/tJQ/gF2dBCtg6kWF+dsV6E35GEYsBh+FBbOwjF1w//q7ERx5A3fqF9L5HeEtA7J+cyjsT+7GSmTC08jnaysq//m0aipHTqtaOiRBRJ1AehUL4x26NLlOc3cGrNzJn4kkOGA3AH3thSOOMno5Z+HFFTQy3lRIibFE1oSBR8jQMdF1gRWCfrWvaF7vONiYRPVwKbmj8ija+/au0nA0tIegqSxBsCPA1hcwdyOCNhKVWTldtBpxL81uUEEcEjQ0PPfCZlzluOk4XjTy8TTabYym40MjpZ5COqQ1y57tQ8sQ==">
+</div>
+        
+
+            <!--start--->
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 alpha">
+                <div class="form-group">
+                    <span id="rfv_AccNo" style="color:Red;visibility:hidden;">Please enter your Account Number</span>
+                    
+                    <label for="text">Account Number *</label>
+                    <input name="txtAccNo" type="text" maxlength="14" id="txtAccNo" class=" input-md required" onkeypress="return numbersonly(event)" placeholder="Account Number">
+                    <small>13-digits Account Number written on top right hand of KE Bill</small>
+                    
+                    
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 omega">
+                <div class="form-group">
+                    <span id="RegularExpressionValidator3" style="color:Red;visibility:hidden;">Please Enter a Valid Consumer No.</span>
+                    <label class="control-label" for="textinput">Consumer Number </label>
+                    
+                    <input name="txtConNo" type="text" id="txtConNo" class="   input-md" placeholder="Consumer Number">
+                    
+                    <small>8 digits</small>
+                    
+                    <span id="specialcharacter" style="color:Red;display:none;">Please do not enter special characters</span>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 omega">
+                <div class="form-group">
+                    <label class="control-label" for="textinput">Email </label>
+                    <input name="txtEmailAdd" type="text" id="txtEmailAdd" title="Please supply your active email address incase you would like to receive your KE bill by Email." class="   input-md" placeholder="Email">
+                    
+                    <small>(Please provide a valid email address to receive your KE bill by Email)</small>
+                    <span id="RegularExpressionValidator1" style="color:Red;visibility:hidden;">Please enter a valid Email Address</span>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 alpha">
+                <div class="form-group">
+                    <label class="control-label" for="textinput">Mobile Number </label>
+                    <input name="txtMobNo" type="text" id="txtMobNo" title="Please supply a valid mobile number incase you would like to receive your KE bill via SMS." class="   input-md" placeholder="Mobile Number">
+                    
+                    <small>e.g.: 03xx-xxxxxxx. Please provide your active mobile number</small>
+                    <span id="RegularExpressionValidator2" style="color:Red;visibility:hidden;">Please enter a valid Mobile No</span>
+                </div>
+            </div>
+
+     <div class="captcha-section" style="width:100%; clear:both;">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            
+            <div class="captcha-label" style="margin-bottom: 10px;">
+                Type the characters you see in the image:
+            </div>
+
+            <div class="captcha-content" style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <!-- Captcha Text -->
+                <span id="lblCaptcha" style="text-align: center; border: none; font-weight: bold; font-size: 20px; font-family: Modern; margin-left:15px;">RSTZ186</span>
+
+                <!-- Refresh Button -->
+                <div class="captcha-refresh">
+                    <a href="#" onclick="GenerateCaptcha()" id="img_captcha">
+                        <img src="/images/reset.png" alt="Refresh Captcha">
+                    </a>
+                </div>
+
+                <!-- Captcha Input -->
+              <div class="captcha-input" style="width: 50%; min-width: 200px;">
+    <input name="txtimgcode" type="text" id="txtimgcode" style="width: 37%;" placeholder="Enter (Letters are case sensitive)">
+</div>
+
+
+                <!-- Hidden Field -->
+                <input type="hidden" name="hdCaptcha" id="hdCaptcha" value="RSTZ186">
+
+                <!-- Message Label -->
+               <div style="width: 100%; margin-top: 10px;">
+    <span id="lblmsg" style="text-align: center; border: none; font-weight: bold; font-size: 15px; font-family: Modern; color: red;"></span>
+</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+            
+
+
+
+            <!--end--->
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 omega">
+                
+                <a id="btnViewBill" class="submit-btn" style="float:right" onclick="hideme(this);" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnViewBill&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">View Bill  <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div>
+
+
+            <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', [], [], [], 90, '');
+//]]>
+</script>
+
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 alpha" style="float: left">
+                <table>
+                    <tbody><tr>
+                        <td>
+                            <b>
+                                <span id="Label1" style="color:#003399;font-size:Medium;"></span>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            
+                        </td>
+                    </tr>
+
+                </tbody></table>
+
+
+
+
+
+                
+            </div>
+
+            <div>
+                
+            </div>
+
+            
+
+            <div style="height: 450px; overflow: auto; width: 100%;" class="grid1">
+                <div>
+
+</div>
+            </div>
+        
+        
+    
+<script type="text/javascript">
+//<![CDATA[
+var Page_Validators =  new Array(document.getElementById("rfv_AccNo"), document.getElementById("RegularExpressionValidator3"), document.getElementById("specialcharacter"), document.getElementById("RegularExpressionValidator1"), document.getElementById("RegularExpressionValidator2"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var rfv_AccNo = document.all ? document.all["rfv_AccNo"] : document.getElementById("rfv_AccNo");
+rfv_AccNo.controltovalidate = "txtAccNo";
+rfv_AccNo.errormessage = "Please enter your Account Number";
+rfv_AccNo.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+rfv_AccNo.initialvalue = "";
+var RegularExpressionValidator3 = document.all ? document.all["RegularExpressionValidator3"] : document.getElementById("RegularExpressionValidator3");
+RegularExpressionValidator3.controltovalidate = "txtConNo";
+RegularExpressionValidator3.errormessage = "Please Enter a Valid Consumer No.";
+RegularExpressionValidator3.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+RegularExpressionValidator3.validationexpression = "(?=^.{1,}$)(?!.*\\s)[0-9a-zA-Z!@#$%*()_+^&]*$";
+var specialcharacter = document.all ? document.all["specialcharacter"] : document.getElementById("specialcharacter");
+specialcharacter.controltovalidate = "txtConNo";
+specialcharacter.focusOnError = "t";
+specialcharacter.errormessage = "Please do not enter special characters";
+specialcharacter.display = "Dynamic";
+specialcharacter.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+specialcharacter.validationexpression = "^[\\sa-zA-Z0-9]*$";
+var RegularExpressionValidator1 = document.all ? document.all["RegularExpressionValidator1"] : document.getElementById("RegularExpressionValidator1");
+RegularExpressionValidator1.controltovalidate = "txtEmailAdd";
+RegularExpressionValidator1.errormessage = "Please enter a valid Email Address";
+RegularExpressionValidator1.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+RegularExpressionValidator1.validationexpression = "\\w+([-+.\']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
+var RegularExpressionValidator2 = document.all ? document.all["RegularExpressionValidator2"] : document.getElementById("RegularExpressionValidator2");
+RegularExpressionValidator2.controltovalidate = "txtMobNo";
+RegularExpressionValidator2.errormessage = "Please enter a valid Mobile No";
+RegularExpressionValidator2.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+RegularExpressionValidator2.validationexpression = "03\\d\\d\\d\\d\\d\\d\\d\\d\\d";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        
+document.getElementById('rfv_AccNo').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('rfv_AccNo'));
+}
+
+document.getElementById('RegularExpressionValidator3').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('RegularExpressionValidator3'));
+}
+
+document.getElementById('specialcharacter').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('specialcharacter'));
+}
+
+document.getElementById('RegularExpressionValidator1').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('RegularExpressionValidator1'));
+}
+
+document.getElementById('RegularExpressionValidator2').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('RegularExpressionValidator2'));
+}
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="mRyj5ZHkI0r3OCLvUT0Cau6_AeZ65iye1qAyW4UAVE4oPqnUpeyisSvSaeI_OudAJxFD7E8EVU3dvOPMHNojMn02j4PpzmLxMNLFoPaumhuX5n3LtPN5W3R_W3H202CEgpozb6a_5n_Zea858Pcln2iZ41LKGOvh"></form>
+
+        </div>
+    <!--Legal Notice -->
+    <center>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="position: absolute; overflow-y: auto; top: 25%">
+
+            <div class="modal-dialog" role="document" style="width: 70%; max-width: 650px; min-width: 350px; height: 30%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title col-md-11" id="exampleModalLongTitle"><b style="font-size: 18px !important">Terms and Conditions</b></h4>
+                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="form-check form-group">
+                                <p style="padding: 10px; text-align: left">By clicking on the below button you agree that:</p>
+                                <ol style="margin-right: 10px; padding-left: 30px; text-align: left">
+                                    <li>You will be bound by the Terms and Conditions of Bill Payment through <strong>Jazz Cash Mobile Account</strong>.</li>
+                                    <li>Please ensure that the information provided for this transaction is correct as the amount cannot be reversed once it is submitted for processing.</li>
+                                    <li>Fees and VAS charges if apply will be imposed by Jazz Cash. Fees and charges that may be imposed on the mobile account should be verified with the Jazz Cash.</li>
+                                    <li>KE does not charge any fees/charges over the Gross Amount Payable and any amount that might appear as additional deduction on the paid bill amount is in respect of VAS charged by Jazz Cash/Mobilink Microfinance Bank Ltd.</li>
+                                </ol>
+                            </div>
+                            <div class=" col-md-12 col-sm-offset-3" style="text-align: left">
+
+                                <div style="display: inline-flex">
+                                    <input class="form-check-input" style="margin-top: -5px" type="checkbox" name="agreeCheck" value="" id="confirmationCheck" checked="checked">
+
+                                    <label style="padding: 10px" class="form-check-label" for="confirmationCheck">
+                                        I agree with the terms and conditions
+                                    </label>
+                                </div>
+
+                                <label id="agreementAlert" style="color: red; display: none;" class="form-check-label form-check-input">You need to check the agreement clause.</label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: -5px !important">
+                        <center>
+                            
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Disagree</button>
+
+                            
+
+                            
+                            <button type="button" class="btn btn-primary" id="paymentSubmit">Agree</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+    <!--Legal Notice NIFT -->
+    
+    <center>
+        <div class="modal fade" id="NiftModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="position: absolute; overflow-y: auto; top: 25%">
+            <div class="modal-dialog" role="document" style="width: 70%; max-width: 650px; min-width: 350px; height: 30%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title col-md-11" id="NiftModalLongTitle"><b style="font-size: 18px !important">Terms and Conditions</b></h4>
+                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+
+                            <div class="form-check form-group">
+                                <p style="padding: 10px; text-align: left">By clicking on the "Pay" button below you agree that:</p>
+                                <ol style="margin-right: 10px; padding-left: 30px; text-align: left">
+                                    <li>You will be bound by the Terms and Conditions of Bill Payment through <strong>Account Transfer</strong>.</li>
+                                    <li>Please ensure that the information provided for this transaction is correct as the amount cannot be reversed once it is submitted for processing.</li>
+                                    <li>Fees and VAS charges if apply will be imposed by your Bank or Service Provider.</li>
+                                    <li>KE does not charge any fees/charges over the Gross Amount Payable and any amount that might appear as additional deduction on the paid bill amount is in respect of VAS charged by Bank or Service Provider for processing this transaction.</li>
+                                </ol>
+                            </div>
+                            <div class=" col-md-12 col-sm-offset-3" style="text-align: left">
+                                <div style="display: inline-flex">
+                                    <input class="form-check-input" style="margin-top: -5px" type="checkbox" name="agreeCheck" value="" id="confirmationNiftCheck" checked="checked">
+
+                                    <label class="form-check-label" style="padding: 10px" for="confirmationNiftCheck">
+                                        I agree with the terms and conditions
+                                    </label>
+                                </div>
+
+                                <label id="niftagreementAlert" style="color: red; display: none;" class="form-check-label form-check-input">You need to check the agreement clause.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: -5px !important">
+                        <center>
+                            
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Disagree</button>
+
+                            
+                            
+
+                            <button type="button" class="btn btn-primary" id="niftpaymentSubmit">Agree</button>
+                        </center>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+
+    <!--Legal Notice  IPG-->
+    <center>
+        <div class="modal fade" id="ipgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="position: absolute; overflow-y: auto; top: 25%">
+            <div class="modal-dialog" role="document" style="width: 70%; height: 30%; max-width: 650px; min-width: 300px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title col-md-11" id="ipgModalLongTitle"><b style="font-size: 18px !important">Terms and Conditions</b></h4>
+                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="form-check form-group">
+                                <p style="padding: 10px; text-align: left">By clicking on the "Pay" button below you agree that:</p>
+                                <ol style="margin-right: 10px; padding-left: 30px; text-align: left">
+
+
+                                    <li>You will be bound by the Terms and Conditions of Bill Payment through <strong>Credit Card/Debit Card</strong>.</li>
+                                    <li>Please ensure that the information provided for this transaction is correct as the amount cannot be reversed once it is submitted for processing.</li>
+                                    <li>Fees and VAS charges if apply will be imposed by your Bank.</li>
+                                    <li>KE does not charge any fees / charges over the Gross Amount Payable and any amount that might appear as additional deduction on the paid bill amount is in respect of VAS charged by the Bank for processing this transaction.</li>
+                                </ol>
+                            </div>
+                            <div class=" col-md-12 col-sm-offset-3" style="text-align: left">
+
+                                <div style="display: inline-flex">
+                                    <input style="margin-top: -5px" class="form-check-input" type="checkbox" name="agreeCheck" value="" id="confirmationipgCheck" checked="checked">
+
+                                    <label style="padding: 10px" class="form-check-label" for="confirmationCheck">
+                                        I agree with the terms and conditions
+                                    </label>
+                                </div>
+
+                                <label id="ipgagreementAlert" style="color: red; display: none;" class="form-check-label form-check-input">You need to check the agreement clause.</label>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: -5px !important">
+                        <center>
+                            
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Disagree</button>
+
+                            
+                            
+                            <button type="button" class="btn btn-primary" id="ipgpaymentSubmit">Agree</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+    <!--Legal Notice PayPro-->
+    <center>
+        <div class="modal fade" id="payProModal" tabindex="-1" role="dialog" aria-labelledby="payProModalLongTitle" aria-hidden="true" style="position: absolute; overflow-y: auto; top: 25%">
+            <div class="modal-dialog" role="document" style="width: 70%; height: 30%; max-width: 650px; min-width: 300px">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding-bottom: 30px;">
+                        <h4 class="modal-title col-md-11" id="payProLongTitle"><b style="font-size: 18px !important">Pay Pro Terms and Conditions</b></h4>
+                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" style="font-size: 27px; padding: 1px 1px 1px 1px;">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="form-check form-group">
+                                <p style="padding: 10px; text-align: left">By clicking on the "Pay" button below you agree that:</p>
+                                <ol style="margin-right: 10px; padding-left: 30px; text-align: left">
+
+
+                                    <li>You will be bound by the Terms and Conditions of Bill Payment through <strong>PayPro </strong>.</li>
+                                    <li>Please ensure that the information provided for this transaction is correct as the amount cannot be reversed once it is submitted for processing.</li>
+                                    <li>Fees and VAS charges if apply will be imposed by your Bank.</li>
+                                    <li>KE does not charge any fees / charges over the Gross Amount Payable and any amount that might appear as additional deduction on the paid bill amount is in respect of VAS charged by the Bank for processing this transaction.</li>
+                                </ol>
+                            </div>
+                            <div class=" col-md-12 col-sm-offset-3" style="text-align: left">
+
+                                <div style="display: inline-flex">
+                                    <input style="margin-top: -5px" class="form-check-input" type="checkbox" name="agreeCheck" value="" id="confirmationPayProCheck" checked="checked">
+
+                                    <label style="padding: 10px" class="form-check-label" for="confirmationCheck">
+                                        I agree with the terms and conditions
+                                    </label>
+                                </div>
+
+                                <label id="payProagreementAlert" style="color: red; display: none;" class="form-check-label form-check-input">You need to check the agreement clause.</label>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: -5px !important">
+                        <center>
+                            
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Disagree</button>
+
+                            
+                            
+                            <button type="button" class="btn btn-primary" id="payPropaymentSubmit">Agree</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+    
+    <center>
+        <div class="modal fade" id="pfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="position: absolute; overflow-y: auto; top: 25%">
+            <div class="modal-dialog" role="document" style="width: 70%; height: 30%; max-width: 650px; min-width: 300px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title col-md-11" id="pfModalLongTitle"><b style="font-size: 18px !important">Terms and Conditions</b></h4>
+                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="form-check form-group">
+                                <p style="padding: 10px; text-align: left">By clicking on the "Pay" button below you agree that:</p>
+                                <ol style="margin-right: 10px; padding-left: 30px; text-align: left">
+
+
+                                    <li>You will be bound by the Terms and Conditions of Bill Payment through <strong>PayFast (APPS)</strong>.</li>
+                                    <li>Please ensure that the information provided for this transaction is correct as the amount cannot be reversed once it is submitted for processing.</li>
+                                    <li>Fees and VAS charges if apply will be imposed by your Bank or Service Provider.</li>
+                                    <li>KE does not charge any fees / charges over the Gross Amount Payable and any amount that might appear as additional deduction on the paid bill amount is in respect of VAS charged by the Bank or Service Provider for processing this transaction.</li>
+                                </ol>
+                            </div>
+                            <div class=" col-md-12 col-sm-offset-3" style="text-align: left">
+                                <div style="display: inline-flex">
+                                    <input style="margin-top: -5px" class="form-check-input" type="checkbox" name="agreeCheck" value="" id="confirmationPFCheck" checked="checked">
+
+                                    <label style="padding: 10px" class="form-check-label" for="confirmationCheck">
+                                        I agree with the terms and conditions
+                                    </label>
+                                </div>
+                                <label id="pfagreementAlert" style="color: red; display: none;" class="form-check-label form-check-input">You need to check the agreement clause.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: -5px !important">
+
+                        <center>
+                            
+                            <button type="button" class=" btn btn-danger" data-dismiss="modal">Disagree</button>
+
+                            
+                            
+                            <button type="button" class="btn btn-primary" id="pfpaymentSubmit">Agree</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+
+    <!--Legal Notice Alfa-->
+    <center>
+        <div class="modal fade" id="alfaModal" tabindex="-1" role="dialog" aria-labelledby="alfaModalLongTitle" aria-hidden="true" style="position: absolute; overflow-y: auto; top: 25%">
+            <div class="modal-dialog" role="document" style="width: 70%; height: 30%; max-width: 650px; min-width: 300px">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding-bottom: 30px;">
+                        <h4 class="modal-title col-md-11" id="alfaLongTitle"><b style="font-size: 18px !important">Alfa Terms and Conditions</b></h4>
+                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" style="font-size: 27px; padding: 1px 1px 1px 1px;">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="form-check form-group">
+                                <p style="padding: 10px; text-align: left">By clicking on the "Pay" button below you agree that:</p>
+                                <ol style="margin-right: 10px; padding-left: 30px; text-align: left">
+
+
+                                    <li>You will be bound by the Terms and Conditions of Bill Payment through <strong>Alfa </strong>.</li>
+                                    <li>Please ensure that the information provided for this transaction is correct as the amount cannot be reversed once it is submitted for processing.</li>
+                                    <li>Fees and VAS charges if apply will be imposed by your Bank.</li>
+                                    <li>KE does not charge any fees / charges over the Gross Amount Payable and any amount that might appear as additional deduction on the paid bill amount is in respect of VAS charged by the Bank for processing this transaction.</li>
+                                </ol>
+                            </div>
+                            <div class=" col-md-12 col-sm-offset-3" style="text-align: left">
+
+                                <div style="display: inline-flex">
+                                    <input style="margin-top: -5px" class="form-check-input" type="checkbox" name="agreeCheck" value="" id="confirmationAlfaCheck" checked="checked">
+
+                                    <label style="padding: 10px" class="form-check-label" for="confirmationCheck">
+                                        I agree with the terms and conditions
+                                    </label>
+                                </div>
+
+                                <label id="alfaAgreementAlert" style="color: red; display: none;" class="form-check-label form-check-input">You need to check the agreement clause.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: -5px !important">
+                        <center>
+                            
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Disagree</button>
+
+                            
+                            
+                            <button type="button" class="btn btn-primary" id="alfaPaymentSubmit">Agree</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+
+
+
+
+    <!--Form  IPG-->
+    <center>
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="position: absolute; overflow-y: auto; padding: 25px; top: 5%">
+            <div class="modal-dialog" role="document" style="width: 80%; height: 30%; max-width: 420px; min-width: 340px">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding-bottom: 30px;">
+                        <h4 class="modal-title col-md-11" id="formModalLongTitle"><b style="font-size: 18px !important">Billing Details</b></h4>
+                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="ipgtable row">
+                            <table class=" table">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Account Number:</span></td>
+                                        <td style="border: none;">
+                                            <span id="Label4" style="max-width: 200px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Bill Amount:</span></td>
+                                        <td style="border: none;">
+                                            <span id="Label5" style="max-width: 200px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Bank Charges:</span></td>
+                                        <td style="border: none;">
+                                            <span id="Label6" style="max-width: 200px">0%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Advance Amount :</span></td>
+                                        <td style="border: none;">
+                                            <input name="txtAdvance" type="number" id="txtAdvance" class="  " style="max-width: 200px" onkeypress="return event.charCode &gt;= 48" min="0" value="0"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Total  :</span></td>
+                                        <td style="border: none;">
+                                            <span id="Label7" style="max-width: 200px"></span></td>
+                                        <td style="border: none; display: none">
+                                            <span id="Label8" style="max-width: 200px"></span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Consumer Number :</span></td>
+                                        <td style="border: none;">
+                                            <input name="form_ConNo" type="text" id="form_ConNo" class="  " style="max-width: 200px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Name on Card *:</span></td>
+                                        <td style="border: none;">
+                                            <input name="form_Name" type="text" id="form_Name" class="  " style="max-width: 200px" required="required"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Email *: </span></td>
+                                        <td style="border: none;">
+                                            <input name="form_Email" type="text" id="form_Email" class="  " style="max-width: 200px" required="required"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;"> Mobile Number *: </span></td>
+                                        <td style="border: none;">
+                                            <input name="form_Num" type="text" id="form_Num" class="  " style="max-width: 200px" required="required"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        
+                        <center>
+                            <a id="ipgformbutton" onclick="onclickIPGform(event)">
+                                <button type="button" class="btn-lg btn-success" id="formSubmit">
+                                    <span class="glyphicon glyphicon-ok"></span>Proceed to Payment</button></a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+    <!--Form  PayPro-->
+    <center>
+        <div class="modal fade" id="payProformModal" tabindex="-1" role="dialog" aria-labelledby="payProModalLongTitle" aria-hidden="true" style="position: absolute; overflow-y: auto; padding: 25px; top: 5%">
+            <div class="modal-dialog" role="document" style="width: 80%; height: 30%; max-width: 420px; min-width: 340px">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding-bottom: 30px;">
+                        <h4 class="modal-title col-md-11" id="payProModalLongTitle"><b style="font-size: 18px !important">Billing Details</b></h4>
+                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" style="font-size: 27px; padding: 1px 1px 1px 1px;">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="ipgtable row">
+                            <table class=" table">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Account Number:</span></td>
+                                        <td style="border: none;">
+                                            <span id="lblpayProAccountNumber" style="max-width: 200px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Bill Amount:</span></td>
+                                        <td style="border: none;">
+                                            <span id="papProBillAmount" style="max-width: 200px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Bank Charges:</span></td>
+                                        <td style="border: none;">
+                                            <span id="Label10" style="max-width: 200px">0%</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Advance Amount :</span></td>
+                                        <td style="border: none;">
+                                            <input name="txtAdvancePayPro" type="number" id="txtAdvancePayPro" class="  " style="max-width: 200px" onkeypress="return event.charCode &gt;= 48" min="0" value="0"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Total  :</span></td>
+                                        <td style="border: none;">
+                                            <span id="lblPayProTotal" style="max-width: 200px"></span></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Name *:</span></td>
+                                        <td style="border: none;">
+                                            <input name="txtName" type="text" id="txtName" class="  " style="max-width: 200px" required="required"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;">Email *: </span></td>
+                                        <td style="border: none;">
+                                            <input name="txtEmail" type="text" id="txtEmail" class="  " style="max-width: 200px" required="required"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none;"></td>
+                                        <td style="border: none;">
+                                            <span style="font-weight:bold;"> Mobile Number *: </span></td>
+                                        <td style="border: none;">
+                                            <input name="txtMobile" type="text" id="txtMobile" class="   numbersOnly" style="max-width: 200px" required="required"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        
+                        <center>
+                            <a id="A1" onclick="onclickpayProform(event)">
+                                <button type="button" class="btn-lg btn-success" id="formSubmit">
+                                    <span class="glyphicon glyphicon-ok"></span>Proceed to Payment</button></a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+    <!--Select Payment Mode CRF final on 29th Jan 2019!-->
+    <div class="modal fade" id="payListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="position: absolute; top: 35%;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid">
+                    <div class="col-md-4" style="margin-top: 20px; margin-bottom: 20px">
+                        <div class="row divRow">
+                            <div class="col-md-3">
+                                <img id="JC1" src="jazz.png" alt="Online Payment" width="40px" height="40px" class="image-hover-highlight">
+                            </div>
+                            <div class="col-md-9" onclick="makeButtonVisible(event)">
+                                <p class="text-align:right;display: block;margin-left: auto;margin-right: auto;"><b>JazzCash Mobile Account</b></p>
+                            </div>
+                        </div>
+                        <div class="row divRow">
+                            <br>
+                            <br>
+
+                        </div>
+                        <div class="row divRow">
+                            <div class="col-md-4">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="row divRow">
+                            <div class="col-md-4">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="row divRow">
+                            <div class="col-md-4">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="row divRow">
+                            <div class="col-md-4">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="row divRow">
+                            <div class="col-md-4">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="modal-header" style="border-bottom: 0px;">
+                            <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="row">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <br>
+                            <br>
+                        </div>
+                        <div class="row center-block">
+                            <center>
+                                <a id="confirmButton" onclick="onClickConfirm(event)" style="display: none;" class="confirm-button">
+                                    <img alt="Confirm" src="Confirm.PNG" style="cursor: pointer;" class="confirm-button"></a></center>
+
+                        </div>
+                        <div class="row">
+                            <br>
+                        </div>
+                        <div class="row">
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <div class="modal fade" id="newPayList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="position: absolute; top: 25%;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="paymentCont">
+                            <div class="header">
+                                Select Payment Option
+                            </div>
+
+
+                            <div class="main">
+                                
+                                
+
+                                <div class="payments" style="align-items: center; /* padding-left: 40px*/">
+                                    
+                                    <div id="ipg" class="button" style="visibility: visible; padding-top: 25px; margin: 10px" onclick="javascript:DivIPGClicked(); onClickConfirm(event); return true; ">
+                                        
+                                        <img src="CC_light.png" alt="Credit/Debit Card" style="height: 40%; width: 50%; padding-bottom: 10px">
+                                        <div id="btn--text" style="padding: 11px; line-height: 14px;">Master and Visa Credit/Debit Cards
+                                            <br>
+                                            <span style="line-height: 14px;">(with Advance Payment Option)</span>
+
+                                        </div>
+                                    </div>
+
+                                    <div id="payFast" class="button" onclick="javascript:DivPFClicked(); onClickConfirm(event); return true;" style="visibility: visible; padding-top: 25px; margin: 10px">
+                                        <img src="PayFast-Logo-hi-res.png" alt="PayFast Logo" style="height: 30%; width: 64%; padding-bottom: 10px">
+                                        
+                                        
+                                        <div id="btn-text" style="padding: 14px; line-height: 14px;">Bank Account / Card Payment / Wallet &amp; Others</div>
+
+                                    </div>
+
+
+
+                                    <div id="nift" class="button" onclick="javascript:DivNiftClicked(); onClickConfirm(event); return true;" style="visibility: visible; padding-top: 25px; margin: 10px; display: none;">
+                                        <img src="nift.png" alt="NIFT Logo" style="height: 40%; width: 64%; padding-bottom: 10px">
+                                        <div id="btn-text" style="padding: 14px; line-height: 14px;">Pay via Account</div>
+                                    </div>
+                                    <div id="jc" class="button active" onclick="javascript:DivJCClicked(); onClickConfirm(event); return true;" style="padding-top: 25px; margin: 10px">
+                                        <img src="jcash.png" alt="Jazz Cash Logo" style="height: 40%; width: 64%; padding-bottom: 10px">
+                                        <div id="btn-text" style="padding: 17px; line-height: 14px;">Jazz Cash Mobile Account</div>
+                                    </div>
+                                    <div id="payp" class="button active" onclick="javascript:DivPayProClicked(); onClickConfirm(event); return true;" style="padding-top: 25px; margin: 10px">
+                                        <img src="PayPro_logo_blue.png" alt="Pay Pro Logo" style="height: 56; width: 64%; padding-bottom: 10px">
+                                        <div id="btn-text" style="padding: 17px; line-height: 14px;">PayPro</div>
+                                    </div>
+
+                                    <div id="alfa" class="button" onclick="javascript:DivAlfaClicked(); onClickConfirm(event); return true;" style="visibility:hidden ; padding-top: 25px; margin: 10px">
+                                        <img src="PayFast-Logo-hi-res.png" alt="PayFast Logo" style="height: 30%; width: 64%; padding-bottom: 10px">
+                                        
+                                        
+                                        <div id="btn-text" style="padding: 14px; line-height: 14px;">Bank Account / Card Payment / Wallet &amp; Others</div>
+
+                                    </div>
+
+
+                                    
+                                </div>
+
+
+                            </div>
+
+
+
+
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+<script type="text/javascript">var _0xcaad=["indexOf","; path=/","cookie","=","x-bni-ja","stack","phantomjs","plugins","length","onmousemove"];var err;function indexOfString(_0x1ce0x3,_0x1ce0x4){return _0x1ce0x3[_0xcaad[0]](_0x1ce0x4)}try{null[0]()}catch(e){err=e};function setCookie(_0x1ce0x6){var _0x1ce0x7=960479158;var _0x1ce0x8=1219668195;var _0x1ce0x9=_0x1ce0x7+_0x1ce0x8+_0xcaad[1];document[_0xcaad[2]]=_0x1ce0x6+_0xcaad[3]+_0x1ce0x9}function set_answer_cookie(){setCookie(_0xcaad[4])}function set_answer_cookie_1(){set_answer_cookie()}if((indexOfString(err[_0xcaad[5]],_0xcaad[6])> -1)||(!(navigator[_0xcaad[7]] instanceof PluginArray)||navigator[_0xcaad[7]][_0xcaad[8]]==0)){}else {document[_0xcaad[9]]=function() {set_answer_cookie_1();};}</script>
+<script>
+    $(document).ready(function () {
+        $("#nift").hide();
+
+        $('#Label8').text($('#Label7').text());
+
+        $('#txtAdvance').on('change', function () {
+            debugger;
+            var oldTotal = parseFloat($('#Label8').text() || 0);
+            var advanceAmount = parseFloat($(this).val()) || 0;
+            var total = oldTotal + advanceAmount; // Assuming total is just the advance amount for simplicity
+            $('#Label7').text(total.toFixed(2));
+        });
+        $('#txtAdvancePayPro').on('change', function () {
+            debugger;
+            var oldTotal = parseFloat($('#papProBillAmount').text() || 0);
+            var advanceAmount = parseFloat($(this).val()) || 0;
+            var total = oldTotal + advanceAmount; // Assuming total is just the advance amount for simplicity
+            $('#lblPayProTotal').text(total.toFixed(2));
+        });
+
+
+        $('.button').on('click', function () {
+            $('.button').removeClass('active');
+            $(this).addClass('active');
+            //$(this).css({ "border-color": "#4cd264", "outline": "none !important", "box-shadow": "0px 3px 22px 0px #7b7b7b" });
+        });
+    });
+//# sourceURL=pen.js
+</script>
+</body></html>
