@@ -337,6 +337,14 @@
                                     <input class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-center placeholder:text-gray-300" name="expectedDate[]" required="" type="date"/>
                                 </div>
                             </div>
+                            
+                            <div class="col-span-1 md:col-span-2 flex justify-end items-center gap-3 mt-1 pt-3 border-t border-gray-200/50">
+                                <div class="live-check-result hidden items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm border"></div>
+                                <button type="button" onclick="checkLiveBill(this)" class="flex items-center gap-1.5 px-4 py-2 bg-indigo-50 text-indigo-600 border border-indigo-200 rounded-xl hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors font-bold text-[11px] uppercase tracking-wider group outline-none focus:ring-2 focus:ring-indigo-500/20">
+                                    <span class="material-symbols-outlined text-[16px] group-hover:animate-pulse">travel_explore</span>
+                                    Live Check
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -356,7 +364,55 @@
         </main>
     </div>
 
+    <!-- Bill Image Viewer Modal -->
+    <div id="billImageModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeBillModal()"></div>
+        <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden scale-95 transition-transform duration-300" id="billModalContent">
+            <div class="flex items-center justify-between p-5 border-b border-gray-100">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-orange-500">receipt_long</span>
+                    <h3 class="font-display font-bold text-gray-800 text-lg">Live Bill Snapshot</h3>
+                </div>
+                <button onclick="closeBillModal()" class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-800 flex items-center justify-center transition-colors outline-none focus:ring-2 focus:ring-gray-300">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+            <div class="flex-1 overflow-auto bg-gray-50 p-4 flex justify-center items-start">
+                <img id="billImageDisplay" src="" alt="Bill Screenshot" class="max-w-full rounded-lg shadow-sm border border-gray-200">
+            </div>
+            <div class="p-4 bg-white border-t border-gray-100 flex justify-between items-center text-xs text-gray-500 font-medium">
+                <p>Captured securely via DekhoBill Live Engine.</p>
+                <a id="billImageDownload" download="Utility_Bill.png" href="#" class="px-4 py-2 bg-orange-50 text-orange-600 rounded-xl hover:bg-orange-100 transition-colors font-bold flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[16px]">download</span> Download
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
+        function openBillModal(base64Image) {
+            const modal = document.getElementById('billImageModal');
+            const content = document.getElementById('billModalContent');
+            const display = document.getElementById('billImageDisplay');
+            const download = document.getElementById('billImageDownload');
+            
+            display.src = 'data:image/png;base64,' + base64Image;
+            download.href = 'data:image/png;base64,' + base64Image;
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+        
+        function closeBillModal() {
+            const modal = document.getElementById('billImageModal');
+            const content = document.getElementById('billModalContent');
+            
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+        }
+
         function addAccountRow() {
             const container = document.getElementById('accountsContainer');
             const row = document.createElement('div');
@@ -378,7 +434,20 @@
                     <div class="relative group/input flex items-center">
                         <span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[22px] transition-colors group-focus-within/input:text-orange-500 pointer-events-none">calendar_today</span>
                         <input type="date" name="expectedDate[]" required class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-center placeholder:text-gray-300">
+                <div class="flex flex-col gap-1.5 w-full">
+                    <label class="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.15em] pl-1 mb-0.5 group-focus-within/input:text-orange-500 transition-colors">Expected Date <span class="text-orange-400">*</span></label>
+                    <div class="relative group/input flex items-center">
+                        <span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[22px] transition-colors group-focus-within/input:text-orange-500 pointer-events-none">calendar_today</span>
+                        <input type="date" name="expectedDate[]" required class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-center placeholder:text-gray-300">
                     </div>
+                </div>
+                
+                <div class="col-span-1 md:col-span-2 flex justify-end items-center gap-3 mt-1 pt-3 border-t border-gray-200/50">
+                    <div class="live-check-result hidden items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm border"></div>
+                    <button type="button" onclick="checkLiveBill(this)" class="flex items-center gap-1.5 px-4 py-2 bg-indigo-50 text-indigo-600 border border-indigo-200 rounded-xl hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors font-bold text-[11px] uppercase tracking-wider group outline-none focus:ring-2 focus:ring-indigo-500/20">
+                        <span class="material-symbols-outlined text-[16px] group-hover:animate-pulse">travel_explore</span>
+                        Live Check
+                    </button>
                 </div>
             `;
             
@@ -390,38 +459,147 @@
             }, 50);
         }
 
-        document.getElementById('billForm').addEventListener('submit', function(e) {
+        async function checkLiveBill(btn) {
+            const row = btn.closest('.account-row');
+            const accountInput = row.querySelector('input[name="accountNo[]"]');
+            const accountNo = accountInput.value.trim();
+            
+            const providerCheckboxes = document.querySelectorAll('input[name="billType[]"]:checked');
+            if (providerCheckboxes.length === 0) {
+                alert("Please select a Utility Service Provider at the top first.");
+                return;
+            }
+            
+            const isKESelected = Array.from(providerCheckboxes).some(cb => cb.value === 'ke');
+            if (!isKESelected) {
+                alert("Live check is currently only supported for K-Electric.");
+                return;
+            }
+
+            if (!accountNo) {
+                alert("Please enter an Account Number first.");
+                accountInput.focus();
+                return;
+            }
+
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">sync</span> Checking...`;
+            
+            const resultBox = row.querySelector('.live-check-result');
+            resultBox.classList.add('hidden');
+            resultBox.classList.remove('bg-green-50', 'text-green-700', 'border-green-200', 'bg-red-50', 'text-red-700', 'border-red-200', 'bg-gray-50', 'text-gray-700', 'border-gray-200', 'flex');
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/check-bill?provider=ke&account=${accountNo}`);
+                const data = await response.json();
+                
+                resultBox.classList.remove('hidden');
+                resultBox.classList.add('flex'); // Keep the flex layout
+                
+                if (data.status.includes('Generated') || data.amount) {
+                    resultBox.classList.add('bg-green-50', 'text-green-700', 'border-green-200');
+                    resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">check_circle</span> ${data.status}: Rs. ${data.amount || 'N/A'}`;
+                    
+                    if (data.billImageBase64) {
+                        let viewBtn = row.querySelector('.view-bill-btn');
+                        if (!viewBtn) {
+                            viewBtn = document.createElement('button');
+                            viewBtn.className = 'view-bill-btn flex items-center gap-1.5 px-3 py-2 bg-orange-50 text-orange-600 border border-orange-200 rounded-xl hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-colors font-bold text-[11px] uppercase tracking-wider outline-none focus:ring-2 focus:ring-orange-500/20';
+                            viewBtn.innerHTML = `<span class="material-symbols-outlined text-[16px]">visibility</span> View`;
+                            btn.parentNode.insertBefore(viewBtn, btn);
+                        }
+                        viewBtn.onclick = () => openBillModal(data.billImageBase64);
+                    }
+                } else if (data.status === 'Not Found') {
+                    resultBox.classList.add('bg-red-50', 'text-red-700', 'border-red-200');
+                    resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">error</span> Not Generated Yet`;
+                } else {
+                    resultBox.classList.add('bg-gray-50', 'text-gray-700', 'border-gray-200');
+                    resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">info</span> ${data.status}`;
+                }
+                
+            } catch (error) {
+                console.error(error);
+                resultBox.classList.remove('hidden');
+                resultBox.classList.add('flex', 'bg-red-50', 'text-red-700', 'border-red-200');
+                resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">wifi_off</span> Connection Error`;
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
+                btn.innerHTML = originalHtml;
+            }
+        }
+
+        document.getElementById('billForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
             const originalContent = btn.innerHTML;
             
+            // Collect Form Data
+            const formData = new FormData(this);
+            const payload = {
+                billType: formData.getAll('billType[]'),
+                accountNo: formData.getAll('accountNo[]'),
+                expectedDate: formData.getAll('expectedDate[]')
+            };
+
+            // Basic validation
+            if (payload.billType.length === 0) {
+                alert("Please select at least one Utility Service Provider.");
+                return;
+            }
+
             btn.disabled = true;
             btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[24px]">progress_activity</span> <span class="relative z-10 tracking-wide">Processing...</span>`;
             btn.classList.add('opacity-90', 'pointer-events-none');
             
-            setTimeout(() => {
-                btn.classList.remove('from-orange-600', 'to-orange-500', 'shadow-[0_8px_24px_rgba(234,88,12,0.3)]', 'hover:shadow-[0_12px_32px_rgba(234,88,12,0.4)]');
-                btn.classList.add('from-green-600', 'to-green-500', 'shadow-[0_8px_24px_rgba(34,197,94,0.3)]', 'hover:shadow-[0_12px_32px_rgba(34,197,94,0.4)]');
-                btn.innerHTML = `<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> <span class="relative z-10 tracking-wide">Records Saved!</span>`;
+            try {
+                // Send real POST request to our new Node.js backend
+                const response = await fetch('http://localhost:3000/api/records', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
                 
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btn.classList.remove('opacity-90', 'pointer-events-none');
-                    btn.classList.add('from-orange-600', 'to-orange-500', 'shadow-[0_8px_24px_rgba(234,88,12,0.3)]', 'hover:shadow-[0_12px_32px_rgba(234,88,12,0.4)]');
-                    btn.classList.remove('from-green-600', 'to-green-500', 'shadow-[0_8px_24px_rgba(34,197,94,0.3)]', 'hover:shadow-[0_12px_32px_rgba(34,197,94,0.4)]');
-                    btn.innerHTML = originalContent;
+                const data = await response.json();
+                
+                if (data.success) {
+                    btn.classList.remove('from-orange-600', 'to-orange-500', 'shadow-[0_8px_24px_rgba(234,88,12,0.3)]', 'hover:shadow-[0_12px_32px_rgba(234,88,12,0.4)]');
+                    btn.classList.add('from-green-600', 'to-green-500', 'shadow-[0_8px_24px_rgba(34,197,94,0.3)]', 'hover:shadow-[0_12px_32px_rgba(34,197,94,0.4)]');
+                    btn.innerHTML = `<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> <span class="relative z-10 tracking-wide">Records Saved!</span>`;
                     
-                    // Reset the form values
-                    this.reset();
-                    
-                    // Remove dynamically added rows (keep only the first one)
-                    const container = document.getElementById('accountsContainer');
-                    const rows = container.querySelectorAll('.account-row');
-                    for (let i = 1; i < rows.length; i++) {
-                        rows[i].remove();
-                    }
-                }, 2000);
-            }, 1500);
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-90', 'pointer-events-none');
+                        btn.classList.add('from-orange-600', 'to-orange-500', 'shadow-[0_8px_24px_rgba(234,88,12,0.3)]', 'hover:shadow-[0_12px_32px_rgba(234,88,12,0.4)]');
+                        btn.classList.remove('from-green-600', 'to-green-500', 'shadow-[0_8px_24px_rgba(34,197,94,0.3)]', 'hover:shadow-[0_12px_32px_rgba(34,197,94,0.4)]');
+                        btn.innerHTML = originalContent;
+                        
+                        // Reset the form values
+                        this.reset();
+                        
+                        // Remove dynamically added rows (keep only the first one)
+                        const container = document.getElementById('accountsContainer');
+                        const rows = container.querySelectorAll('.account-row');
+                        for (let i = 1; i < rows.length; i++) {
+                            rows[i].remove();
+                        }
+                    }, 2000);
+                } else {
+                    throw new Error(data.message || 'Server returned an error.');
+                }
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                alert("Failed to save records: " + error.message);
+                
+                btn.disabled = false;
+                btn.classList.remove('opacity-90', 'pointer-events-none');
+                btn.innerHTML = originalContent;
+            }
         });
     </script>
 </body>
