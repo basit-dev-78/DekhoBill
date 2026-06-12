@@ -488,6 +488,21 @@
             content.classList.add('scale-95');
         }
 
+        window.downloadBill = function(id) {
+            const b64 = window.downloadedBills[id];
+            const mime = b64.startsWith('JVBERi') ? 'application/pdf' : 'image/png';
+            const ext = b64.startsWith('JVBERi') ? 'pdf' : 'png';
+            const blob = base64ToBlob(b64, mime);
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Utility_Bill.' + ext;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
         function addAccountRow() {
             const container = document.getElementById('accountsContainer');
             const row = document.createElement('div');
@@ -661,9 +676,14 @@
                         window.downloadedBills[billId] = data.pdfBase64;
                         
                         billBtnHtml = `
-                            <button type="button" onclick="openBillModal(window.downloadedBills['${billId}'])" class="ml-2 px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-xs font-bold transition-colors">
-                                View Bill
-                            </button>
+                            <div class="flex gap-2 ml-2">
+                                <button type="button" onclick="openBillModal(window.downloadedBills['${billId}'])" class="px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-xs font-bold transition-colors">
+                                    View Bill
+                                </button>
+                                <button type="button" onclick="window.downloadBill('${billId}')" class="px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">download</span> Download
+                                </button>
+                            </div>
                         `;
                         // Auto-open the PDF modal so the user sees it immediately
                         setTimeout(() => openBillModal(window.downloadedBills[billId]), 100);
