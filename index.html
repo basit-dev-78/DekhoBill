@@ -326,7 +326,7 @@
                             <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-w-sm w-full p-6 animate-fadeIn">
                                 <div class="flex justify-between items-center mb-4">
                                     <h3 class="text-lg font-bold text-white">Security Check</h3>
-                                    <button onclick="closeCaptchaModal()" class="text-gray-400 hover:text-white transition-colors">
+                                    <button type="button" onclick="closeCaptchaModal()" class="text-gray-400 hover:text-white transition-colors">
                                         <span class="material-symbols-outlined">close</span>
                                     </button>
                                 </div>
@@ -337,13 +337,13 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <input type="text" id="captchaInput" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 text-center tracking-widest uppercase" placeholder="Enter characters" autocomplete="off">
+                                    <input type="text" id="captchaInput" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 text-center tracking-widest" placeholder="Enter characters (case sensitive)" autocomplete="off">
                                     <p id="captchaError" class="text-red-400 text-xs mt-2 hidden">Incorrect Captcha. Try again.</p>
                                 </div>
 
                                 <div class="flex space-x-3">
-                                    <button onclick="closeCaptchaModal()" class="flex-1 px-4 py-2 bg-slate-800 text-gray-300 rounded-xl hover:bg-slate-700 transition-colors font-medium">Cancel</button>
-                                    <button id="submitCaptchaBtn" onclick="submitCaptcha()" class="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors font-medium">Submit</button>
+                                    <button type="button" onclick="closeCaptchaModal()" class="flex-1 px-4 py-2 bg-slate-800 text-gray-300 rounded-xl hover:bg-slate-700 transition-colors font-medium">Cancel</button>
+                                    <button type="button" id="submitCaptchaBtn" onclick="submitCaptcha()" class="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors font-medium">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -361,7 +361,7 @@
                                 <label class="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.15em] pl-1 mb-0.5 group-focus-within/input:text-orange-500 transition-colors">Expected Date <span class="text-orange-400">*</span></label>
                                 <div class="relative group/input flex items-center">
                                     <span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[22px] transition-colors group-focus-within/input:text-orange-500 pointer-events-none">calendar_today</span>
-                                    <input class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-center placeholder:text-gray-300" name="expectedDate[]" required="" type="date"/>
+                                    <input class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-left placeholder:text-gray-300" name="expectedDate[]" required="" type="text" placeholder="e.g. may-26"/>
                                 </div>
                             </div>
                             
@@ -405,7 +405,8 @@
                 </button>
             </div>
             <div class="flex-1 overflow-auto bg-gray-50 p-4 flex justify-center items-start">
-                <img id="billImageDisplay" src="" alt="Bill Screenshot" class="max-w-full rounded-lg shadow-sm border border-gray-200">
+                <img id="billImageDisplay" src="" alt="Bill Screenshot" class="max-w-full rounded-lg shadow-sm border border-gray-200 hidden">
+                <iframe id="billPdfDisplay" src="" class="w-full h-full min-h-[60vh] rounded-lg shadow-sm border border-gray-200 hidden"></iframe>
             </div>
             <div class="p-4 bg-white border-t border-gray-100 flex justify-between items-center text-xs text-gray-500 font-medium">
                 <p>Captured securely via DekhoBill Live Engine.</p>
@@ -432,14 +433,46 @@
 
         let currentSessionId = null;
 
-        function openBillModal(base64Image) {
+        // Helper to convert base64 to Blob URL to prevent browser crash from large data URIs
+        function base64ToBlob(base64, mime) {
+            const byteCharacters = atob(base64);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            return new Blob([byteArray], { type: mime });
+        }
+
+        function openBillModal(base64Data) {
             const modal = document.getElementById('billImageModal');
             const content = document.getElementById('billModalContent');
-            const display = document.getElementById('billImageDisplay');
+            const imgDisplay = document.getElementById('billImageDisplay');
+            const pdfDisplay = document.getElementById('billPdfDisplay');
             const download = document.getElementById('billImageDownload');
             
-            display.src = 'data:image/png;base64,' + base64Image;
-            download.href = 'data:image/png;base64,' + base64Image;
+            // Check if it's a PDF (starts with JVBERi)
+            if (base64Data.startsWith('JVBERi')) {
+                imgDisplay.classList.add('hidden');
+                pdfDisplay.classList.remove('hidden');
+                
+                const blob = base64ToBlob(base64Data, 'application/pdf');
+                const blobUrl = URL.createObjectURL(blob);
+                
+                pdfDisplay.src = blobUrl;
+                download.href = blobUrl;
+                download.download = 'Utility_Bill.pdf';
+            } else {
+                pdfDisplay.classList.add('hidden');
+                imgDisplay.classList.remove('hidden');
+                
+                const blob = base64ToBlob(base64Data, 'image/png');
+                const blobUrl = URL.createObjectURL(blob);
+                
+                imgDisplay.src = blobUrl;
+                download.href = blobUrl;
+                download.download = 'Utility_Bill.png';
+            }
             
             modal.classList.remove('opacity-0', 'pointer-events-none');
             content.classList.remove('scale-95');
@@ -475,7 +508,7 @@
                     <label class="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.15em] pl-1 mb-0.5 group-focus-within/input:text-orange-500 transition-colors">Expected Date <span class="text-orange-400">*</span></label>
                     <div class="relative group/input flex items-center">
                         <span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[22px] transition-colors group-focus-within/input:text-orange-500 pointer-events-none">calendar_today</span>
-                        <input type="date" name="expectedDate[]" required class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-center placeholder:text-gray-300">
+                        <input type="text" name="expectedDate[]" required placeholder="e.g. may-26" class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-left placeholder:text-gray-300">
                     </div>
                 </div>
                 
@@ -534,9 +567,9 @@
                 if (data.success) {
                     currentSessionId = data.sessionId;
                     if (data.captchaBase64) {
-                        openCaptchaModal(data.captchaBase64, resultBox, btn);
+                        openCaptchaModal(data.captchaBase64, resultBox, btn, accountNo, row);
                     } else {
-                        submitCaptchaRequest(resultBox, btn, '');
+                        submitCaptchaRequest(resultBox, btn, '', row);
                     }
                 } else {
                     resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20';
@@ -552,10 +585,12 @@
 
         let pendingResultBox = null;
         let pendingBtn = null;
+        let pendingRow = null;
 
-        function openCaptchaModal(base64, resultBox, btn) {
+        function openCaptchaModal(base64, resultBox, btn, accountNo, row) {
             pendingResultBox = resultBox;
             pendingBtn = btn;
+            pendingRow = row;
             document.getElementById('captchaImage').src = 'data:image/png;base64,' + base64;
             document.getElementById('captchaInput').value = '';
             document.getElementById('captchaError').classList.add('hidden');
@@ -589,23 +624,25 @@
             document.getElementById('submitCaptchaBtn').disabled = true;
             document.getElementById('submitCaptchaBtn').innerHTML = 'Verifying...';
             
-            await submitCaptchaRequest(pendingResultBox, pendingBtn, input);
+            await submitCaptchaRequest(pendingResultBox, pendingBtn, input, pendingRow);
             
             document.getElementById('submitCaptchaBtn').disabled = false;
             document.getElementById('submitCaptchaBtn').innerHTML = 'Submit';
         }
 
-        async function submitCaptchaRequest(resultBox, btn, captchaText) {
+        async function submitCaptchaRequest(resultBox, btn, captchaText, row) {
             resultBox.innerHTML = `<span class="material-symbols-outlined animate-spin text-[14px]">refresh</span> Processing Bill...`;
             resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20';
             
             document.getElementById('captchaModal').classList.add('hidden');
 
+            const expectedDate = row ? row.querySelector('input[name="expectedDate[]"]').value.trim() : '';
+
             try {
                 const response = await fetch('http://localhost:3000/api/ke/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sessionId: currentSessionId, captchaText })
+                    body: JSON.stringify({ sessionId: currentSessionId, captchaText, expectedDate })
                 });
 
                 const data = await response.json();
@@ -613,29 +650,32 @@
                 if (data.success) {
                     resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center justify-between bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
                     
-                    let amountHtml = data.amount === 'See PDF' ? 'See PDF' : `Rs. ${data.amount}`;
+                    let amountHtml = data.amount;
+                    if (amountHtml === 'See PDF') amountHtml = 'Amount Hidden';
+                    
+                    let billBtnHtml = '';
+                    if (data.pdfBase64) {
+                        // Store the large base64 string in a global object to avoid DOM bloat/crashes
+                        if (!window.downloadedBills) window.downloadedBills = {};
+                        const billId = 'bill_' + Date.now();
+                        window.downloadedBills[billId] = data.pdfBase64;
+                        
+                        billBtnHtml = `
+                            <button type="button" onclick="openBillModal(window.downloadedBills['${billId}'])" class="ml-2 px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-xs font-bold transition-colors">
+                                View Bill
+                            </button>
+                        `;
+                        // Auto-open the PDF modal so the user sees it immediately
+                        setTimeout(() => openBillModal(window.downloadedBills[billId]), 100);
+                    }
                     
                     resultBox.innerHTML = `
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-[14px]">check_circle</span>
-                            <span>${data.status}: <strong class="text-white">${amountHtml}</strong></span>
+                            <span>Amount: <strong class="text-white">Rs. ${amountHtml}</strong></span>
+                            ${billBtnHtml}
                         </div>
                     `;
-
-                    if (data.pdfBase64) {
-                        const dlBtn = document.createElement('button');
-                        dlBtn.className = 'ml-4 flex items-center gap-1 text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 px-2 py-1 rounded transition-colors';
-                        dlBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">download</span> PDF';
-                        dlBtn.onclick = () => {
-                            const link = document.createElement('a');
-                            link.href = 'data:application/pdf;base64,' + data.pdfBase64;
-                            link.download = 'KE_Bill.pdf';
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                        };
-                        resultBox.appendChild(dlBtn);
-                    }
                     
                     btn.disabled = false;
                     currentSessionId = null;

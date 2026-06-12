@@ -90,6 +90,7 @@ app.post('/api/ke/init', async (req, res) => {
             args: ['--disable-blink-features=AutomationControlled']
         });
         const context = await browser.newContext({
+            acceptDownloads: true,
             userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             viewport: { width: 1280, height: 720 }
         });
@@ -118,13 +119,17 @@ app.post('/api/ke/init', async (req, res) => {
         await page.locator('#txtAccNo').waitFor({ state: 'visible', timeout: 15000 });
         await page.locator('#txtAccNo').fill(account);
 
-        // Wait up to 15 seconds for the captcha image or text span
+        // Wait up to 15 seconds for the captcha text span
         let captchaBase64 = null;
         try {
-            const captchaLoc = page.locator('#imgCaptcha, #lblCaptcha');
-            await captchaLoc.first().waitFor({ state: 'visible', timeout: 15000 });
-            const buffer = await captchaLoc.first().screenshot();
-            captchaBase64 = buffer.toString('base64');
+            const captchaLoc = page.locator('#lblCaptcha');
+            await captchaLoc.waitFor({ state: 'visible', timeout: 15000 });
+            const captchaText = await captchaLoc.innerText();
+            
+            // Auto-fill the captcha input directly
+            console.log(`[!] Session ${sessionId}: Extracted Captcha Text: ${captchaText}`);
+            await page.locator('#txtimgcode').fill(captchaText);
+
         } catch (e) {
             console.log(`[!] Session ${sessionId}: Captcha element not visible.`);
         }
@@ -136,12 +141,8 @@ app.post('/api/ke/init', async (req, res) => {
             timestamp: Date.now()
         });
 
-        if (!captchaBase64) {
-            console.log(`[!] Session ${sessionId}: No Captcha found. Proceeding in automated bypass mode.`);
-            // DO NOT ABORT! The staging site often has the Captcha disabled!
-        }
-
         res.json({ success: true, sessionId, captchaBase64 });
+
 
     } catch (e) {
         if (browser) await browser.close();
@@ -152,7 +153,7 @@ app.post('/api/ke/init', async (req, res) => {
 
 // STEP 2: Submit Captcha & Fetch Bill
 app.post('/api/ke/submit', async (req, res) => {
-    const { sessionId, captchaText } = req.body;
+    const { sessionId, captchaText, expectedDate } = req.body;
     
     if (!sessionId || !activeSessions.has(sessionId)) {
         return res.status(400).json({ success: false, message: 'Invalid or expired session. Please try again.' });
@@ -194,29 +195,99 @@ app.post('/api/ke/submit', async (req, res) => {
             // Wait for PDF to generate or iframe to load
             await page.waitForTimeout(5000);
             
-            let amount = null;
-            try {
-                amount = await page.locator('body').evaluate((body) => {
-                    const text = body.innerText;
-                    const match = text.match(/(?:Payable Amount|Amount Payable|Payable Within Due Date)[^\d]*((?:\d{1,3},)?\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i);
-                    if (match && match[1]) return parseFloat(match[1].replace(/,/g, ''));
-                    const match2 = text.match(/(?:Total|Amount)[^\d]*((?:\d{1,3},)?\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i);
-                    if (match2 && match2[1]) return parseFloat(match2[1].replace(/,/g, ''));
-                    return null;
-                });
-            } catch(e) {}
-
-            const buffer = await page.pdf({ format: 'A4', printBackground: true });
+            // DUMP THE SUCCESSFUL HTML FOR ANALYSIS
+            require('fs').writeFileSync('SUCCESS_DUMP.html', await page.content());
+            console.log(`[!] Session ${sessionId}: Dumped successful HTML to SUCCESS_DUMP.html`);
             
+            // Look for the specific bill if expectedDate is provided
+            let amount = null;
+            let downloadClicked = false;
+            let pdfBuffer = null;
+            let targetRow = null;
+
+            if (expectedDate) {
+                const cleanExpectedDate = expectedDate.trim().toLowerCase();
+                
+                // Find all rows in GridView1
+                const rows = await page.locator('#GridView1 tr').all();
+                
+                for (let i = 0; i < rows.length; i++) {
+                    const row = rows[i];
+                    const rowText = await row.innerText();
+                    if (rowText.toLowerCase().includes(cleanExpectedDate)) {
+                        // Found it!
+                        console.log(`[!] Session ${sessionId}: Found matching row for ${expectedDate}.`);
+                        targetRow = row;
+                        
+                        try {
+                            const cells = await row.locator('td').all();
+                            if (cells.length >= 3) {
+                                const amountText = await cells[2].innerText();
+                                amount = parseFloat(amountText.replace(/,/g, ''));
+                                console.log(`[!] Session ${sessionId}: Extracted amount ${amount} for ${expectedDate}.`);
+                            }
+                        } catch (e) {
+                            console.log(`[!] Session ${sessionId}: Error finding specific bill: ${e.message}`);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // If no specific row found, default to the first data row for the PDF download
+            if (!targetRow) {
+                const rows = await page.locator('#GridView1 tr').all();
+                if (rows.length > 1) {
+                    targetRow = rows[1]; // Index 1 is usually the first data row (after header)
+                }
+            }
+
+            if (targetRow) {
+                try {
+                    const downloadBtn = targetRow.locator('input[value="Download"]');
+                    if (await downloadBtn.count() > 0) {
+                        console.log(`[!] Session ${sessionId}: Clicking download button...`);
+                        const [download] = await Promise.all([
+                            page.waitForEvent('download', { timeout: 15000 }).catch(e => null),
+                            downloadBtn.click()
+                        ]);
+
+                        if (download) {
+                            const path = await download.path();
+                            pdfBuffer = require('fs').readFileSync(path);
+                            console.log(`[!] Session ${sessionId}: Downloaded PDF successfully.`);
+                        } else {
+                            console.log(`[!] Session ${sessionId}: No download event captured.`);
+                        }
+                    }
+                } catch (e) {
+                    console.log(`[!] Session ${sessionId}: Failed to download PDF: ${e.message}`);
+                }
+            }
+
+            // If no expected date was provided or amount wasn't found, try to get the overall amount
+            if (!amount) {
+                try {
+                    amount = await page.locator('body').evaluate((body) => {
+                        const text = body.innerText;
+                        const match = text.match(/(?:Payable Amount|Amount Payable|Payable Within Due Date|Payable Before Due Date)[^\d]*((?:\d{1,3},)?\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i);
+                        if (match && match[1]) return parseFloat(match[1].replace(/,/g, ''));
+                        const match2 = text.match(/(?:Total|Amount)[^\d]*((?:\d{1,3},)?\d{1,3}(?:,\d{3})*(?:\.\d+)?)/i);
+                        if (match2 && match2[1]) return parseFloat(match2[1].replace(/,/g, ''));
+                        return null;
+                    });
+                } catch(e) {}
+            }
+
             // Cleanup session
             activeSessions.delete(sessionId);
             await browser.close();
 
             res.json({ 
                 success: true, 
-                status: 'Bill Generated', 
-                amount: amount || 'See PDF',
-                pdfBase64: buffer.toString('base64')
+                status: 'Amount', 
+                amount: amount ? amount : 'Not Found',
+                pdfBase64: pdfBuffer ? pdfBuffer.toString('base64') : null
             });
             
         }
