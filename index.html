@@ -320,7 +320,14 @@
                         </button>
                     </div>
 
-                    <div class="flex flex-col gap-5 overflow-y-auto no-scrollbar max-h-[38vh] p-4 -m-4" id="accountsContainer">
+                    <!-- Table Header (Desktop Only) -->
+                    <div class="hidden md:grid grid-cols-[1fr_1fr_40px] gap-4 px-2 pb-3 mb-1 border-b border-gray-200/60 text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.15em]">
+                        <div class="pl-2">Account Number <span class="text-orange-400">*</span></div>
+                        <div class="pl-2">Expected Date <span class="text-orange-400">*</span></div>
+                        <div></div>
+                    </div>
+
+                    <div class="flex flex-col gap-0 overflow-y-auto no-scrollbar max-h-[45vh] pr-2" id="accountsContainer">
                         <!-- Captcha Modal -->
                         <div id="captchaModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                             <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-w-sm w-full p-6 animate-fadeIn">
@@ -349,35 +356,33 @@
                         </div>
 
                         <!-- Initial Row -->
-                        <div class="account-row grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-white/50 backdrop-blur-md rounded-3xl border border-white/80 shadow-sm relative group">
-                            <div class="flex flex-col gap-1.5 w-full">
-                                <label class="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.15em] pl-1 mb-0.5 group-focus-within/input:text-orange-500 transition-colors">Account Number <span class="text-orange-400">*</span></label>
-                                <div class="relative group/input">
-                                    <span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[22px] transition-colors group-focus-within/input:text-orange-500 pointer-events-none">badge</span>
-                                    <input class="account-no w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all placeholder:text-gray-300" name="accountNo[]" placeholder="e.g. 123456789" required="" type="text"/>
+                        <div class="account-row group border-b border-gray-100 last:border-0 py-3 relative animate-slideIn">
+                            <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_40px] gap-4 items-center">
+                                <div class="relative group/input w-full">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[20px] pointer-events-none">badge</span>
+                                    <input class="account-no w-full h-[46px] bg-white border border-gray-200/80 border-l-[3px] border-l-orange-500 rounded-xl pl-11 pr-4 text-[14px] font-bold text-gray-800 shadow-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all placeholder:text-gray-300" name="accountNo[]" placeholder="e.g. 123456789" required="" type="text"/>
+                                </div>
+                                <div class="relative group/input flex items-center w-full">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[20px] pointer-events-none">calendar_today</span>
+                                    <input class="w-full h-[46px] bg-white border border-gray-200/80 border-l-[3px] border-l-orange-500 rounded-xl pl-11 pr-4 text-[14px] font-bold text-gray-800 shadow-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-left placeholder:text-gray-300" name="expectedDate[]" required="" type="text" placeholder="e.g. may-26"/>
+                                </div>
+                                <div class="flex justify-end md:justify-center">
+                                    <!-- Empty space for delete button alignment -->
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-1.5 w-full">
-                                <label class="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.15em] pl-1 mb-0.5 group-focus-within/input:text-orange-500 transition-colors">Expected Date <span class="text-orange-400">*</span></label>
-                                <div class="relative group/input flex items-center">
-                                    <span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[22px] transition-colors group-focus-within/input:text-orange-500 pointer-events-none">calendar_today</span>
-                                    <input class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-left placeholder:text-gray-300" name="expectedDate[]" required="" type="text" placeholder="e.g. may-26"/>
-                                </div>
-                            </div>
-                            
-                            <div class="col-span-1 md:col-span-2 flex justify-end items-center gap-3 mt-1 pt-3 border-t border-gray-200/50">
-                                <div class="result-box hidden items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm border"></div>
-                                <button type="button" onclick="checkLiveBill(this)" class="flex items-center gap-1.5 px-4 py-2 bg-indigo-50 text-indigo-600 border border-indigo-200 rounded-xl hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors font-bold text-[11px] uppercase tracking-wider group outline-none focus:ring-2 focus:ring-indigo-500/20">
-                                    <span class="material-symbols-outlined text-[16px] group-hover:animate-pulse">travel_explore</span>
-                                    Live Check
-                                </button>
+                            <div class="col-span-full">
+                                <div class="result-box hidden w-full"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Action Button -->
-                <div class="pb-8 mt-2">
+                <div class="pb-8 mt-2 flex flex-col gap-4">
+                    <button type="button" id="globalCheckBtn" onclick="checkAllLiveBills()" class="w-full h-16 bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-600 hover:text-white rounded-2xl md:rounded-[2rem] font-display font-extrabold text-lg flex items-center justify-center gap-3 transition-colors outline-none shadow-sm focus:ring-4 focus:ring-indigo-500/20">
+                        <span class="material-symbols-outlined text-[24px]">travel_explore</span>
+                        Check All Live Bills
+                    </button>
                     <button class="w-full h-16 md:h-20 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 bg-[length:200%_auto] hover:bg-right rounded-2xl md:rounded-[2rem] text-white font-display font-extrabold text-lg md:text-xl shadow-[0_8px_24px_rgba(234,88,12,0.4)] hover:shadow-[0_16px_40px_rgba(234,88,12,0.6)] flex items-center justify-center gap-3 group relative overflow-hidden transition-all duration-500 hover:-translate-y-1 active:translate-y-0" type="submit">
                         <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <span class="relative z-10 tracking-wide uppercase">Save All Records</span>
@@ -506,33 +511,26 @@
         function addAccountRow() {
             const container = document.getElementById('accountsContainer');
             const row = document.createElement('div');
-            row.className = 'account-row grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-white/50 backdrop-blur-md rounded-3xl border border-white/80 shadow-sm relative animate-slideIn mt-1';
+            row.className = 'account-row group border-b border-gray-100 last:border-0 py-3 relative animate-slideIn';
             
             row.innerHTML = `
-                <button type="button" onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 w-8 h-8 bg-red-50 text-red-500 rounded-full flex items-center justify-center shadow-sm border border-red-100 hover:bg-red-500 hover:text-white hover:scale-110 active:scale-95 transition-all z-30 outline-none focus:ring-4 focus:ring-red-500/30">
-                    <span class="material-symbols-outlined text-[18px]">close</span>
-                </button>
-                <div class="flex flex-col gap-1.5 w-full">
-                    <label class="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.15em] pl-1 mb-0.5 group-focus-within/input:text-orange-500 transition-colors">Account Number <span class="text-orange-400">*</span></label>
-                    <div class="relative group/input">
-                        <span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[22px] transition-colors group-focus-within/input:text-orange-500 pointer-events-none">badge</span>
-                        <input type="text" name="accountNo[]" required placeholder="e.g. 123456789" class="account-no w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all placeholder:text-gray-300">
+                <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_40px] gap-4 items-center">
+                    <div class="relative group/input w-full">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[20px] pointer-events-none">badge</span>
+                        <input type="text" name="accountNo[]" required placeholder="Account No (e.g. 123456789)" class="account-no w-full h-[46px] bg-white border border-gray-200/80 border-l-[3px] border-l-orange-500 rounded-xl pl-11 pr-4 text-[14px] font-bold text-gray-800 shadow-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all placeholder:text-gray-300">
+                    </div>
+                    <div class="relative group/input flex items-center w-full">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[20px] pointer-events-none">calendar_today</span>
+                        <input type="text" name="expectedDate[]" required placeholder="Expected Date (e.g. may-26)" class="w-full h-[46px] bg-white border border-gray-200/80 border-l-[3px] border-l-orange-500 rounded-xl pl-11 pr-4 text-[14px] font-bold text-gray-800 shadow-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all placeholder:text-gray-300">
+                    </div>
+                    <div class="flex justify-end md:justify-center">
+                        <button type="button" onclick="this.closest('.account-row').remove()" class="w-8 h-8 bg-red-50 text-red-500 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white hover:scale-110 active:scale-95 transition-all outline-none shadow-sm border border-red-100 focus:ring-2 focus:ring-red-500/30">
+                            <span class="material-symbols-outlined text-[18px]">close</span>
+                        </button>
                     </div>
                 </div>
-                <div class="flex flex-col gap-1.5 w-full">
-                    <label class="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.15em] pl-1 mb-0.5 group-focus-within/input:text-orange-500 transition-colors">Expected Date <span class="text-orange-400">*</span></label>
-                    <div class="relative group/input flex items-center">
-                        <span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 z-10 text-[22px] transition-colors group-focus-within/input:text-orange-500 pointer-events-none">calendar_today</span>
-                        <input type="text" name="expectedDate[]" required placeholder="e.g. may-26" class="w-full h-[52px] bg-white border border-gray-200/80 border-l-[4px] border-l-orange-500 rounded-xl pl-12 pr-4 text-[15px] font-bold text-gray-800 shadow-sm hover:shadow-md hover:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-500/15 focus:border-orange-500 focus:border-l-orange-600 outline-none transition-all flex items-center justify-center text-left placeholder:text-gray-300">
-                    </div>
-                </div>
-                
-                <div class="col-span-1 md:col-span-2 flex justify-end items-center gap-3 mt-1 pt-3 border-t border-gray-200/50">
-                    <div class="result-box hidden items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm border"></div>
-                    <button type="button" onclick="checkLiveBill(this)" class="flex items-center gap-1.5 px-4 py-2 bg-indigo-50 text-indigo-600 border border-indigo-200 rounded-xl hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors font-bold text-[11px] uppercase tracking-wider group outline-none focus:ring-2 focus:ring-indigo-500/20">
-                        <span class="material-symbols-outlined text-[16px] group-hover:animate-pulse">travel_explore</span>
-                        Live Check
-                    </button>
+                <div class="col-span-full">
+                    <div class="result-box hidden w-full"></div>
                 </div>
             `;
             
@@ -543,7 +541,10 @@
             }, 50);
         }
 
-        async function checkLiveBill(btn) {
+        let rowsToCheck = [];
+        let currentRowIndex = 0;
+
+        async function checkAllLiveBills() {
             const providerCheckboxes = document.querySelectorAll('input[name="billType[]"]:checked');
             if (providerCheckboxes.length === 0) {
                 alert("Please select a Utility Service Provider at the top first.");
@@ -556,19 +557,42 @@
                 return;
             }
 
-            const row = btn.closest('.account-row');
-            const accountNo = row.querySelector('.account-no').value.trim();
+            const container = document.getElementById('accountsContainer');
+            rowsToCheck = Array.from(container.querySelectorAll('.account-row')).filter(row => row.querySelector('.account-no').value.trim() !== '');
 
-            if (!accountNo) {
-                alert("Please enter an Account Number first.");
+            if (rowsToCheck.length === 0) {
+                alert("Please enter at least one Account Number.");
                 return;
             }
 
+            const globalBtn = document.getElementById('globalCheckBtn');
+            if (globalBtn) {
+                globalBtn.disabled = true;
+                globalBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[24px]">refresh</span> Checking...';
+            }
+
+            currentRowIndex = 0;
+            processNextRow();
+        }
+
+        async function processNextRow() {
+            if (currentRowIndex >= rowsToCheck.length) {
+                const globalBtn = document.getElementById('globalCheckBtn');
+                if (globalBtn) {
+                    globalBtn.disabled = false;
+                    globalBtn.innerHTML = '<span class="material-symbols-outlined text-[24px]">travel_explore</span> Check All Live Bills';
+                }
+                return;
+            }
+
+            const row = rowsToCheck[currentRowIndex];
+            currentRowIndex++;
+
+            const accountNo = row.querySelector('.account-no').value.trim();
             const resultBox = row.querySelector('.result-box');
             resultBox.classList.remove('hidden');
             resultBox.innerHTML = `<span class="material-symbols-outlined animate-spin text-[14px]">refresh</span> Connecting to KE Portal...`;
-            resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20';
-            btn.disabled = true;
+            resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 w-full';
 
             try {
                 const response = await fetch('http://localhost:3000/api/ke/init', {
@@ -582,19 +606,19 @@
                 if (data.success) {
                     currentSessionId = data.sessionId;
                     if (data.captchaBase64) {
-                        openCaptchaModal(data.captchaBase64, resultBox, btn, accountNo, row);
+                        openCaptchaModal(data.captchaBase64, resultBox, {disabled: false}, accountNo, row);
                     } else {
-                        submitCaptchaRequest(resultBox, btn, '', row);
+                        submitCaptchaRequest(resultBox, {disabled: false}, '', row);
                     }
                 } else {
-                    resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20';
+                    resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20 w-full';
                     resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">error</span> ${data.message}`;
-                    btn.disabled = false;
+                    processNextRow();
                 }
             } catch (error) {
-                resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20';
+                resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20 w-full';
                 resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">error</span> Connection Failed`;
-                btn.disabled = false;
+                processNextRow();
             }
         }
 
@@ -626,10 +650,12 @@
                 });
             }
             if (pendingResultBox) {
-                pendingResultBox.classList.add('hidden');
-                pendingBtn.disabled = false;
+                pendingResultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-amber-500/10 text-amber-400 border border-amber-500/20 w-full';
+                pendingResultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">cancel</span> Check Cancelled`;
+                if (pendingBtn) pendingBtn.disabled = false;
             }
             currentSessionId = null;
+            processNextRow();
         }
 
         async function submitCaptcha() {
@@ -647,7 +673,7 @@
 
         async function submitCaptchaRequest(resultBox, btn, captchaText, row) {
             resultBox.innerHTML = `<span class="material-symbols-outlined animate-spin text-[14px]">refresh</span> Processing Bill...`;
-            resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20';
+            resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 w-full';
             
             document.getElementById('captchaModal').classList.add('hidden');
 
@@ -663,42 +689,45 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center justify-between bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+                    resultBox.className = 'result-box mt-4 px-5 py-4 rounded-2xl text-base font-bold flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-xl shadow-emerald-500/30 border border-emerald-400/50 w-full animate-slideIn';
                     
                     let amountHtml = data.amount;
                     if (amountHtml === 'See PDF') amountHtml = 'Amount Hidden';
                     
                     let billBtnHtml = '';
                     if (data.pdfBase64) {
-                        // Store the large base64 string in a global object to avoid DOM bloat/crashes
                         if (!window.downloadedBills) window.downloadedBills = {};
                         const billId = 'bill_' + Date.now();
                         window.downloadedBills[billId] = data.pdfBase64;
                         
                         billBtnHtml = `
-                            <div class="flex gap-2 ml-2">
-                                <button type="button" onclick="openBillModal(window.downloadedBills['${billId}'])" class="px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-xs font-bold transition-colors">
-                                    View Bill
+                            <div class="flex gap-3 w-full sm:w-auto mt-3 sm:mt-0">
+                                <button type="button" onclick="openBillModal(window.downloadedBills['${billId}'])" class="flex-1 sm:flex-none px-4 py-2 bg-white text-emerald-700 hover:bg-emerald-50 rounded-xl text-[13px] font-extrabold transition-all shadow-sm flex items-center justify-center gap-1.5">
+                                    <span class="material-symbols-outlined text-[18px]">visibility</span> View Bill
                                 </button>
-                                <button type="button" onclick="window.downloadBill('${billId}')" class="px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[14px]">download</span> Download
+                                <button type="button" onclick="window.downloadBill('${billId}')" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-800/40 hover:bg-emerald-800/60 text-white border border-emerald-300/30 rounded-xl text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 backdrop-blur-md">
+                                    <span class="material-symbols-outlined text-[18px]">download</span> Download
                                 </button>
                             </div>
                         `;
-                        // Auto-open the PDF modal so the user sees it immediately
-                        setTimeout(() => openBillModal(window.downloadedBills[billId]), 100);
                     }
                     
                     resultBox.innerHTML = `
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[14px]">check_circle</span>
-                            <span>Amount: <strong class="text-white">Rs. ${amountHtml}</strong></span>
-                            ${billBtnHtml}
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner">
+                                <span class="material-symbols-outlined text-white text-[28px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-emerald-100 text-[10px] uppercase tracking-[0.2em] font-extrabold mb-0.5">Payable Amount</span>
+                                <span class="text-2xl font-black tracking-tight leading-none">Rs. ${amountHtml}</span>
+                            </div>
                         </div>
+                        ${billBtnHtml}
                     `;
                     
-                    btn.disabled = false;
+                    if (btn) btn.disabled = false;
                     currentSessionId = null;
+                    processNextRow();
                 } else {
                     if (data.retryable) {
                         document.getElementById('captchaError').classList.remove('hidden');
@@ -707,17 +736,19 @@
                         document.getElementById('captchaInput').focus();
                         resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">visibility</span> Waiting for Captcha...`;
                     } else {
-                        resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20';
+                        resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20 w-full';
                         resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">error</span> ${data.message}`;
-                        btn.disabled = false;
+                        if (btn) btn.disabled = false;
                         currentSessionId = null;
+                        processNextRow();
                     }
                 }
             } catch (error) {
-                resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20';
+                resultBox.className = 'result-box mt-3 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 bg-red-500/10 text-red-400 border border-red-500/20 w-full';
                 resultBox.innerHTML = `<span class="material-symbols-outlined text-[14px]">error</span> Verification Failed`;
-                btn.disabled = false;
+                if (btn) btn.disabled = false;
                 currentSessionId = null;
+                processNextRow();
             }
         }
 
