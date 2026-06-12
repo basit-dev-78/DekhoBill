@@ -206,7 +206,20 @@ app.post('/api/ke/submit', async (req, res) => {
             let targetRow = null;
 
             if (expectedDate) {
-                const cleanExpectedDate = expectedDate.trim().toLowerCase();
+                let cleanExpectedDate = expectedDate.trim().toLowerCase();
+                
+                // Map full month names to 3-letter abbreviations to match KE bill format
+                const monthMap = {
+                    'january': 'jan', 'february': 'feb', 'march': 'mar', 'april': 'apr',
+                    'may': 'may', 'june': 'jun', 'july': 'jul', 'august': 'aug',
+                    'september': 'sep', 'october': 'oct', 'november': 'nov', 'december': 'dec'
+                };
+                
+                for (const [full, short] of Object.entries(monthMap)) {
+                    if (cleanExpectedDate.includes(full)) {
+                        cleanExpectedDate = cleanExpectedDate.replace(full, short);
+                    }
+                }
                 
                 // Find all rows in GridView1
                 const rows = await page.locator('#GridView1 tr').all();
